@@ -20,7 +20,7 @@ export default function MoviesList() {
   }, []); // Exécuter une seule fois au montage
 
   return (
-    <div className="movies-list">
+    <div className="grid grid-cols-4 gap-4 pl-10 pr-10">
       {movies.length > 0 ? (
         movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)
       ) : (

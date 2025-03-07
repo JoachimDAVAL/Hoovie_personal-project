@@ -1,9 +1,21 @@
-import logo from '../assets/Logo components.svg'
-import categoryIcon from '../assets/category.png'
-import { Link } from 'react-router-dom'
+import logo from '../assets/Logo components.svg';
+import categoryIcon from '../assets/category.png';
+import { Link } from 'react-router-dom';
+import Modal from './ModalCategory';
+import { useState } from 'react';
 
 
 export default function Header() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div>
       <header className='place-self-center max-h-20 ml-200'>
@@ -15,9 +27,13 @@ export default function Header() {
         </Link>
     </header>
     <div className='flex justify-between'>
-      <img src={categoryIcon} alt='logo' className='max-w-15 max-h-10 ml-10 mb-5'/>
+      <div>
+        <img onClick={openModal} src={categoryIcon} alt='logo' className='max-w-15 max-h-10 ml-10 mb-5'/>
+      </div>
       <input type='text' placeholder='Search...' className='mr-80 rounded-xl border-solid shadow-xl max-h-10 min-w-80'/>
     </div>
+
+    <Modal isOpen={isModalOpen} onClose={closeModal}/>
 
     </div>
   )

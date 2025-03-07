@@ -31,6 +31,7 @@ export async function getPopularMovies() {
   }
 };
 
+
 export async function getMovieById(id: number) {
   try {
     const httpResponse = await httpRequester.get<IMovie>(`/movie/${id}`);
@@ -41,3 +42,30 @@ export async function getMovieById(id: number) {
   }
 };
 
+
+export async function getAllGenres() {
+  try {
+    const httResponse = await httpRequester.get<{ genres: { id: number; name: string }[] }>('/genre/movie/list');
+    return httResponse.data.genres;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des genres : ", error);
+    throw new Error("Impossible de récupérer les genres de films.");
+  }
+};
+
+
+export async function getMoviesByGenre(genreId: number) {
+  try {
+    const httpResponse = await httpRequester.get(`/discover/movie`, {
+      params: {
+        with_genres: genreId, 
+        language: "en-US",
+        sort_by: "popularity.desc",
+      },
+    });
+    return httpResponse.data.results;
+  } catch (error) {
+    console.error(`Erreur lors de la récupération des films du genre ${genreId} : `, error);
+    throw new Error("Impossible de récupérer les films du genre.");
+  }
+}

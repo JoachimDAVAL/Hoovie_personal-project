@@ -3,6 +3,10 @@
 
 @import "tailwindcss";
 
+body {
+  font-family: Bebas Neue, sans-serif;
+}
+
 header {
   font-family: 'Sixtyfour Convergence', sans-serif;
 }

@@ -25,19 +25,26 @@ export default function MovieDetail() {
 
   return (
     <div className="place-items-center">
-      <h1 className="">{movie.title}</h1>
-      <img
+      <h1 className="text-4xl font-bold m-10">{movie.title}</h1>
+      <div className="flex p-10 items-center">
+        <img
         src={movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : "/placeholder.jpg"}
         alt={movie.title}
         className="max-h-200 rounded-xl"
       />
-      <p>{movie.overview}</p>
-      <p>Date de sortie : {movie.release_date}</p>
-      <p>Note moyenne : {movie.vote_average}</p>
-      <p>Nombre de votes : {movie.vote_count}</p>
-      <p>Langue originale : {movie.original_language}</p>
-      <p>Titre original : {movie.original_title}</p>
-      <p>Genres : {movie.genre_ids?.join(", ")}</p>
+      <div className=" place-content-around m-10 ">
+        <p className="">{movie.overview}</p>
+        <p>Date de sortie : {movie.release_date}</p>
+        <p>Note moyenne : {movie.vote_average}</p>
+        <p>Nombre de votes : {movie.vote_count}</p>
+        <p>Langue originale : {movie.original_language}</p>
+        <p>Titre original : {movie.original_title}</p>
+        <p>Genres : {movie.genre_ids?.join(", ")}</p>
+      </div>
+      </div>
+      
+
+      
     </div>
   );
 }

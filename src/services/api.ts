@@ -24,7 +24,6 @@ export async function getPopularMovies() {
         }
       }
     );
-    
     return httpResponse.data.results;
   } catch (error) {
     console.error("Erreur lors de la récupération des films : ", error);

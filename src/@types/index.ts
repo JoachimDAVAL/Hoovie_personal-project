@@ -14,3 +14,7 @@ export interface IMovie {
 export interface ApiResponse<T> {
   results: T[];
 }
+
+export interface MovieCardProps {
+  movie: IMovie;
+}

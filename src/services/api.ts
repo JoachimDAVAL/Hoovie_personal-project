@@ -30,5 +30,15 @@ export async function getPopularMovies() {
     console.error("Erreur lors de la récupération des films : ", error);
     throw new Error("Impossible de récupérer les films populaires.");
   }
-}
+};
+
+export async function getMovieById(id: number) {
+  try {
+    const httpResponse = await httpRequester.get<IMovie>(`/movie/${id}`);
+    return httpResponse.data;
+  } catch (error) {
+    console.error(`Erreur lors de la récupération du film ${id} : `, error);
+    throw new Error("Impossible de récupérer le film.");
+  }
+};
 

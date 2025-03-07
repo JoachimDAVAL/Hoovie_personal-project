@@ -1,8 +1,9 @@
 import './App.css'
-import Header from './components/Header'
-import Footer from './components/Footer'
-// import { useState, useEffect } from 'react'
-import MoviesList from './pages/MoviesList'
+import { Routes, Route } from 'react-router';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import MoviesList from './pages/MoviesList';
+import MovieDetail from './pages/MovieDetail';
 
 
 
@@ -13,7 +14,15 @@ function App() {
   return (
     <div className='App'>
       <Header />
-      <MoviesList />
+      <main>
+        <Routes>
+          <Route path="/" element={<MoviesList />} />
+          <Route path="/movie/:id" element={<MovieDetail />} />
+        </Routes>
+   
+      </main>
+
+      
 
       <Footer />
     </div>

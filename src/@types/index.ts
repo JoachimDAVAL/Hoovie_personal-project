@@ -18,3 +18,8 @@ export interface ApiResponse<T> {
 export interface MovieCardProps {
   movie: IMovie;
 }
+
+export interface IGenre {
+  id: number;
+  name: string
+}

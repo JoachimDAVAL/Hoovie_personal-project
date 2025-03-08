@@ -1,12 +1,16 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { IMovie } from "../@types";
 import MovieCard from "../components/MovieCard";
-import {getPopularMovies} from "../services/api";
+import { getMoviesByGenre } from "../services/api";
+import { useParams } from "react-router-dom";
 
-export default function MoviesList() {
+
+
+export default function MoviesByGenre() {
   const [movies, setMovies] = useState<IMovie[]>([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const {id}  = useParams<{ id: string }>();
 
   const loader = useRef(null);
 
@@ -14,12 +18,12 @@ export default function MoviesList() {
     setMovies([]);
     setPage(1);
     setHasMore(true);
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const data = await getPopularMovies(page); 
+        const data = await getMoviesByGenre(Number(id), page);
 
         if (data.length === 0) {
           setHasMore(false);
@@ -31,10 +35,10 @@ export default function MoviesList() {
       }
     };
 
-    if (hasMore) {
+    if(hasMore) {
       fetchMovies();
     }
-  }, [page, hasMore]);
+  }, [id, page, hasMore]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -53,13 +57,14 @@ export default function MoviesList() {
     return () => observer.disconnect();
   }, [hasMore]);
 
+
+
   return (
     <div className="grid grid-cols-4 gap-4 pl-10 pr-10">
 
-        {movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
+            {movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
 
-        {hasMore && <div ref={loader} className="text-center">Chargement...</div>}
-
-    </div>
-  );
+          {hasMore && <div ref={loader} className="text-center">Chargement...</div>}
+        </div>
+  )
 }

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IMovie } from "../@types";
+import { IMovie, IGenre } from "../@types";
 
 const VITE_TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
@@ -11,7 +11,7 @@ const httpRequester = axios.create({
   },
 });
 
-export async function getPopularMovies() {
+export async function getPopularMovies(page: number) {
   try {
     const httpResponse = await httpRequester.get<{ results: IMovie[] }>(
       '/discover/movie', {
@@ -19,7 +19,7 @@ export async function getPopularMovies() {
           include_adult: 'false',
           include_video: 'false',
           language: 'en-US',
-          page: '1',
+          page: page,
           sort_by: 'popularity.desc',
         }
       }
@@ -45,7 +45,7 @@ export async function getMovieById(id: number) {
 
 export async function getAllGenres() {
   try {
-    const httResponse = await httpRequester.get<{ genres: { id: number; name: string }[] }>('/genre/movie/list');
+    const httResponse = await httpRequester.get<{ genres: IGenre[] }>('/genre/movie/list');
     return httResponse.data.genres;
   } catch (error) {
     console.error("Erreur lors de la récupération des genres : ", error);
@@ -54,13 +54,14 @@ export async function getAllGenres() {
 };
 
 
-export async function getMoviesByGenre(genreId: number) {
+export async function getMoviesByGenre(genreId: number, page: number) {
   try {
     const httpResponse = await httpRequester.get(`/discover/movie`, {
       params: {
         with_genres: genreId, 
         language: "en-US",
         sort_by: "popularity.desc",
+        page: page,
       },
     });
     return httpResponse.data.results;

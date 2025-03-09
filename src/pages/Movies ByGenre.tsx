@@ -62,9 +62,10 @@ export default function MoviesByGenre() {
   return (
     <div className="grid grid-cols-4 gap-4 pl-10 pr-10">
 
-            {movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
+      {movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
 
-          {hasMore && <div ref={loader} className="text-center">Chargement...</div>}
-        </div>
+      {hasMore && <div ref={loader} className="text-center">Chargement...</div>}
+      
+    </div>
   )
 }

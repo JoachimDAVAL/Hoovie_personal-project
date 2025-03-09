@@ -11,13 +11,18 @@ const httpRequester = axios.create({
   },
 });
 
+
+// PopularMoviesList Page
+
+
+// Request to get popular movies from the API
 export async function getPopularMovies(page: number) {
   try {
     const httpResponse = await httpRequester.get<{ results: IMovie[] }>(
-      '/discover/movie', {
+      '/movie/popular', {
         params: {
-          include_adult: 'false',
-          include_video: 'false',
+          include_adult: 'true',
+          include_video: 'true',
           language: 'en-US',
           page: page,
           sort_by: 'popularity.desc',
@@ -32,6 +37,33 @@ export async function getPopularMovies(page: number) {
 };
 
 
+// Request to get movies with search fonctionality
+export async function getMoviesBySearch(query: string, page: number) {
+  try {
+    const httpResponse = await httpRequester.get<{ results: IMovie[] }>(
+      '/search/movie', {
+        params: {
+          query: query,
+          include_adult: 'true',
+          include_video: 'true',
+          language: 'en-US',
+          page: page,
+
+        }
+      });
+      return httpResponse.data.results;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des films : ", error);
+    throw new Error("Impossible de récupérer les films populaires.");
+  }
+}
+
+
+
+// MovieDetail Page
+
+
+// Request to get a movie by its ID
 export async function getMovieById(id: number) {
   try {
     const httpResponse = await httpRequester.get<IMovie>(`/movie/${id}`);
@@ -42,7 +74,24 @@ export async function getMovieById(id: number) {
   }
 };
 
+// Requets to get the providers by movie ID
+export async function getProvidersByMovieId(id: number) {
+  try {
+    const httpResponse = await httpRequester.get(`/movie/${id}/watch/providers`);
+    return httpResponse.data.results;
+  }catch (error) {
+    console.error(`Erreur lors de la récupération des fournisseurs du film ${id} : `, error);
+    throw new Error("Impossible de récupérer les fournisseurs du film.");
+  }
+};
 
+
+
+
+// MoviesByGenre Page
+
+
+// Request to get all genres from the API
 export async function getAllGenres() {
   try {
     const httResponse = await httpRequester.get<{ genres: IGenre[] }>('/genre/movie/list');
@@ -53,7 +102,7 @@ export async function getAllGenres() {
   }
 };
 
-
+// Request to get movies by genre
 export async function getMoviesByGenre(genreId: number, page: number) {
   try {
     const httpResponse = await httpRequester.get(`/discover/movie`, {

@@ -3,7 +3,7 @@ import { IMovie, IGenre } from "../@types";
 
 const VITE_TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
-const httpRequester = axios.create({
+export const httpRequester = axios.create({
   baseURL: "https://api.themoviedb.org/3",
   headers: {
     accept: "application/json",

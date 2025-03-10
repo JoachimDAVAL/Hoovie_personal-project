@@ -1,13 +1,13 @@
 import axios from "axios";
 import { IMovie, IGenre } from "../@types";
 
-const VITE_TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+const TMDB_API_KEY = import.meta.env.TMDB_API_KEY;
 
 export const httpRequester = axios.create({
   baseURL: "https://api.themoviedb.org/3",
   headers: {
     accept: "application/json",
-    Authorization: `Bearer ${VITE_TMDB_API_KEY}`, 
+    Authorization: `Bearer ${TMDB_API_KEY}`, 
   },
 });
 

@@ -38,7 +38,7 @@ export async function getPopularMovies(page: number) {
 
 
 // Request to get movies with search fonctionality
-export async function getMoviesBySearch(query: string, page: number) {
+export async function getMoviesBySearch(query: string) {
   try {
     const httpResponse = await httpRequester.get<{ results: IMovie[] }>(
       '/search/movie', {
@@ -47,7 +47,7 @@ export async function getMoviesBySearch(query: string, page: number) {
           include_adult: 'true',
           include_video: 'true',
           language: 'en-US',
-          page: page,
+          page: 1,
 
         }
       });

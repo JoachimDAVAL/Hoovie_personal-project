@@ -4,15 +4,10 @@ import { Link } from 'react-router-dom';
 import Modal from './ModalCategory';
 import { useState } from 'react';
 import SearchBar from './SearchBar';
-import { IMovie } from '../@types';
 
-interface HeaderProps {
-  query: string;
-  setQuery: (query: string) => void;
-  onResults: (movies: IMovie[]) => void;
-}
 
-export default function Header({ query, setQuery, onResults }: HeaderProps) {
+
+export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -37,7 +32,7 @@ export default function Header({ query, setQuery, onResults }: HeaderProps) {
       <div>
         <img onClick={openModal} src={categoryIcon} alt='logo' className='max-w-15 max-h-10 ml-10 mb-5'/>
       </div>
-      <SearchBar query={query} setQuery={setQuery} onResults={onResults} />
+      <SearchBar />
     </div>
 
     <Modal isOpen={isModalOpen} onClose={closeModal}/>

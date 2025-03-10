@@ -5,28 +5,28 @@ import Footer from './components/Footer';
 import PopularMoviesList from './pages/PopularMoviesList';
 import {MovieDetail} from './pages/MovieDetail';
 import MoviesByGenre from './pages/Movies ByGenre';
+import { SearchProvider } from './contexts/SearchContext';
 import SearchPage from './pages/SearchPage';
 
 
 function App() {
   
   return (
-    <div className='App'>
-      <Header />
-      <main>
-        <Routes>
-          <Route path="/" element={<PopularMoviesList />} />
-          <Route path="/movie/:id" element={<MovieDetail />} />
-          <Route path="/movies/genre/:id" element={<MoviesByGenre />} />
-          <Route path="/search" element={<SearchPage />} />
-        </Routes>
-   
-      </main>
+    <SearchProvider>
+      <div className='App'>
+        <Header />
+        <main>
+          <Routes>
+            <Route path="/" element={<PopularMoviesList />} />
+            <Route path="/movie/:id" element={<MovieDetail />} />
+            <Route path="/movies/genre/:id" element={<MoviesByGenre />} />
+            <Route path="/search" element={<SearchPage />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </SearchProvider>
 
-      
-
-      <Footer />
-    </div>
   )
 }
 

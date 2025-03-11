@@ -1,7 +1,7 @@
 import axios from "axios";
 import { IMovie, IGenre } from "../@types";
 
-const TMDB_API_KEY = import.meta.env.TMDB_API_KEY;
+const TMDB_API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
 export const httpRequester = axios.create({
   baseURL: "https://api.themoviedb.org/3",
@@ -84,7 +84,6 @@ export async function getProvidersByMovieId(id: number) {
     throw new Error("Impossible de récupérer les fournisseurs du film.");
   }
 };
-
 
 
 

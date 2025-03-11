@@ -53,7 +53,7 @@ export default function SearchBar() {
     <div>
       <input
         type="text"
-        placeholder="Rechercher un film..."
+        placeholder="Search..."
         value={state.query}
         onChange={handleSearchChange}
         className="mr-80 rounded-xl border-solid shadow-xl max-h-10 min-w-80 focus:ring-2 focus:ring-blue-500"

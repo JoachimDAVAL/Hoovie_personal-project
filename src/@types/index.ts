@@ -1,19 +1,24 @@
 export interface IMovie {
   id: number;
   title: string;
-  poster_path: string | null; // Certaines entrées peuvent ne pas avoir d'image
+  poster_path: string | null; 
   overview: string;
   release_date: string;
-  vote_average?: number; // Optionnel, utile pour afficher les notes
-  vote_count?: number; // Nombre de votes, utile pour filtrer par popularité
-  original_language?: string; // Permet d'afficher le drapeau du pays
-  original_title?: string; // Pour voir le titre original
-  genres?: { id: number; name: string }[]; // Liste des genres (ex: [28, 12] => Action, Aventure)
-  backdrop_path?: string | null; // Image de fond pour la page de détail
-  budget?: number; // Budget du film
-  revenue?: number; // Recette du film  
-  production_companies?: { id: number; name: string; logo_path: string }[]; // Liste des sociétés de production
-  tagline?: string; // Slogan du film 
+  vote_average?: number; 
+  vote_count?: number; 
+  original_language?: string; 
+  original_title?: string; 
+  genres?: { id: number; name: string }[];
+  backdrop_path?: string | null; 
+  budget?: number; 
+  revenue?: number;  
+  production_companies?: { id: number; name: string; logo_path: string }[]; 
+  tagline?: string; 
+}
+
+export interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
 }
 
 export interface ApiResponse<T> {
@@ -27,4 +32,27 @@ export interface MovieCardProps {
 export interface IGenre {
   id: number;
   name: string
+}
+
+export interface IProvider {
+  provider_id: number;
+  provider_name: string;
+  logo_path?: string;
+  display_priority: number;
+  _id?: string;
+}
+
+export interface IWatchProviders {
+  [countryCode: string]: {  
+    flatrate?: IProvider[];  
+    rent?: IProvider[];     
+    buy?: IProvider[];      
+  };
+}
+
+export interface IActors {
+  cast_id: number;
+  name: string;
+  character: string;
+  credit_id: string
 }

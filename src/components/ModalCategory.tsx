@@ -1,14 +1,8 @@
 // Modal.tsx
 import { useState, useEffect } from 'react';
 import { getAllGenres } from '../services/api';
-
-import { IGenre } from '../@types';
+import { IGenre, ModalProps} from '../@types';
 import CategoryCard from './CategoryCard';
-
-interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 

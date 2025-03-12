@@ -67,6 +67,7 @@ export async function getMoviesBySearch(query: string) {
 export async function getMovieById(id: number) {
   try {
     const httpResponse = await httpRequester.get<IMovie>(`/movie/${id}`);
+    console.log(httpResponse.data);
     return httpResponse.data;
   } catch (error) {
     console.error(`Erreur lors de la récupération du film ${id} : `, error);
@@ -74,14 +75,26 @@ export async function getMovieById(id: number) {
   }
 };
 
-// Requets to get the providers by movie ID
+// Request to get the providers by movie ID
 export async function getProvidersByMovieId(id: number) {
   try {
     const httpResponse = await httpRequester.get(`/movie/${id}/watch/providers`);
+    // console.log(httpResponse.data.results);
     return httpResponse.data.results;
   }catch (error) {
     console.error(`Erreur lors de la récupération des fournisseurs du film ${id} : `, error);
     throw new Error("Impossible de récupérer les fournisseurs du film.");
+  }
+};
+
+//  Request to get the movie credits
+export async function getMovieCredits(id: number) {
+  try {
+    const httpResponse = await httpRequester.get(`/movie/${id}/credits`);
+    return httpResponse.data.cast;
+  } catch (error) {
+    console.error(`Erreur lors de la récupération des crédits du film ${id} : `, error);
+    throw new Error("Impossible de récupérer les crédits.");
   }
 };
 

@@ -1,25 +1,9 @@
 import { useParams } from "react-router-dom";
-import { IMovie } from "../@types";
+import { IMovie, IWatchProviders } from "../@types";
 import { useEffect, useState } from "react";
 import { getMovieById, getProvidersByMovieId } from "../services/api";
-import { BsFillStarFill } from "react-icons/bs";
-
-
-interface IProvider {
-  provider_id: number;
-  provider_name: string;
-  logo_path?: string;
-  display_priority: number;
-  _id?: string;
-}
-
-interface IWatchProviders {
-  [countryCode: string]: {  // Exemple : "US", "FR", etc.
-    flatrate?: IProvider[];  // Liste des providers offrant le contenu en streaming
-    rent?: IProvider[];      // Liste des providers pour la location
-    buy?: IProvider[];       // Liste des providers pour l'achat
-  };
-}
+import Star from "../assets/Star.webp";
+import ModalActors from "../components/ModalActors";
 
 export function MovieDetail() {
   const { id } = useParams<{ id: string }>();
@@ -50,22 +34,42 @@ export function MovieDetail() {
     fetchProviders();
   }, [id]);
 
+  const budget = movie?.budget ? new Intl.NumberFormat('en-US').format(movie.budget) : 'N/A';
+  const revenue = movie?.revenue ? new Intl.NumberFormat('en-US').format(movie.revenue) : 'N/A';
+
   if (!movie) {
     return <p>Chargement du film...</p>;
   }
 
   const renderProviders = () => {
     const countryProviders = providers['FR']; 
-    if (!countryProviders) return <p className="col-span-2 col-start-1">Aucun fournisseur disponible</p>;
-
-    const flatProviders = countryProviders.flatrate;
-    if (!flatProviders || flatProviders.length === 0) return <p className="col-span-2 col-start-1">Aucun fournisseur de streaming disponible</p>;
+    if (!countryProviders) return <p className="col-span-2">Aucun fournisseur disponible</p>;
 
     return (
-      <div className="col-span-4 col-start-1">
-        <h2>Disponible sur :</h2>
-        <div className="flex flex-wrap gap-4">
-          {flatProviders.map(provider => (
+        <div className="col-span-2 grid grid-cols-2 gap-4">
+        {!countryProviders.flatrate || countryProviders.flatrate.length === 0 ? <p className="col-start-1">No streaming providers</p> 
+        :
+          <div className="flex flex-wrap gap-4 col-start-1">
+            <h2>Stream :</h2>
+            {countryProviders.flatrate?.map(provider => (
+              <div key={provider.provider_id} className="flex items-center">
+                {provider.logo_path && (
+                  <img
+                    src={`https://image.tmdb.org/t/p/w45${provider.logo_path}`}
+                    alt={provider.provider_name}
+                    className="h-8 mr-2"
+                  />
+                )}
+                <span>{provider.provider_name}</span>
+              </div>
+            ))}
+          </div>
+}
+        {!countryProviders.rent || countryProviders.rent.length === 0 ? <p className="col-start-2">No renting providers</p> 
+        :
+        <div className="col-start-2 flex flex-wrap gap-4 ">
+          <h2>Rent :</h2>
+          {countryProviders.rent?.map(provider => (
             <div key={provider.provider_id} className="flex items-center">
               {provider.logo_path && (
                 <img
@@ -78,6 +82,8 @@ export function MovieDetail() {
             </div>
           ))}
         </div>
+        }
+        
       </div>
     );
   };
@@ -102,34 +108,54 @@ export function MovieDetail() {
           </div>
         </div>
 
-      <div className="place-content-around m-10 grid grid-cols-6 gap-4 text-center items-center bg-white p-4 rounded-xl shadow-xl">
-          <div className="col-span-2 col-start-1">
+      <div className="place-content-around m-10 grid grid-cols-3 gap-10 text-center items-center bg-white p-4 rounded-xl shadow-xl">
+
+         <div className="col-span-1 col-start-1 row-span-2 place-items-center">
+            <div className="  bg-contain bg-center bg-no-repeat flex flex-col items-center justify-center p-4"
+            style={{
+              backgroundImage: `url(${Star})`,
+              width: "300px", 
+              height: "300px", 
+            }}
+            >
+
+              <p className="text-4xl font-bold">
+                  {movie.vote_average}
+              </p>
+       
+            </div>
+            <p className="text-sm">Vote count: {movie.vote_count}</p>
+          </div>
+
+          <div className="col-start-2">
             {movie.genres?.map((genre) => (
-              <span key={genre.id} className="px-3 py-1 bg-gray-100 rounded-full text-sm">
+              <span key={genre.id} className="px-3 py-1 bg-gray-100 rounded-full text-l mr-2">
                 {genre.name}</span>
             ))}
           </div>
-          <p className="col-span-2 col-start-3">Original Title : {movie.original_title} ({movie.original_language})</p>
-          <p className="col-span-2 col-start-5">Release Date : {new Date(movie.release_date).getFullYear()}</p>
-          <p className="col-span-4 col-start-2 row-span-2">{movie.overview}</p>
-           <div className="col-span-1 col-start-1">
-              <p>Budget: {movie.budget} </p>
-              <p>Revenues: {movie.revenue}</p>
+
+          <p className="col-start-2 text-xl">{movie.overview}</p>
+
+          <div className="col-start-3 row-start-1 row-span-3">
+            <p className="">Original Title : {movie.original_title} ({movie.original_language})</p>
+            <p className="">Release Date : {new Date(movie.release_date).getFullYear()}</p>
+            <ModalActors id={movie.id} />
+            <div className="">
+              <p>Budget: {budget} $ </p>
+              <p>Revenues: {revenue} $</p>
            </div>
-           <div className="col-span-2 col-start-3 row-span-2 items-center justify-center">
-              <p className="flex items-center justify-center">{movie.vote_average}
-              <BsFillStarFill className="ml-2" />
-              </p>
-              <p>Vote numbers : {movie.vote_count}</p>
-           </div>
-          {renderProviders()}
-          <ul className="col-span-2 col-start-5">Production Companies: 
+           
+           <ul className="">Production Companies: 
             {movie.production_companies?.map(company => 
               (<li key={company.id} className="place-items-center">
                 <img src={company.logo_path ? `https://image.tmdb.org/t/p/w45${company.logo_path}` : "/placeholder.jpg"} alt={company.name} />
                 {company.name}
               </li>))}
-          </ul>
+            </ul>
+          </div>
+
+          {renderProviders()}
+          
         </div>
       </div>
     </div>

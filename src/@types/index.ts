@@ -16,9 +16,15 @@ export interface IMovie {
   tagline?: string; 
 }
 
-export interface ModalProps {
+export interface ModalCategoryProps {
   isOpen: boolean;
   onClose: () => void;
+}
+
+export interface ModalDetailProps {
+  isOpen: boolean;
+  onClose: () => void;
+  id: number;
 }
 
 export interface ApiResponse<T> {

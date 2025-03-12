@@ -1,14 +1,24 @@
 import { useParams } from "react-router-dom";
-import { IMovie, IWatchProviders } from "../@types";
+import { IMovie, IWatchProviders, IActors} from "../@types";
 import { useEffect, useState } from "react";
-import { getMovieById, getProvidersByMovieId } from "../services/api";
+import { getMovieById, getProvidersByMovieId, getMovieCredits } from "../services/api";
 import Star from "../assets/Star.webp";
-import ModalActors from "../components/ModalActors";
+
+import ActorsDropdown from "../components/ModalActors";
 
 export function MovieDetail() {
   const { id } = useParams<{ id: string }>();
   const [movie, setMovie] = useState<IMovie | null>(null);
   const [providers, setProviders] = useState<IWatchProviders>({});
+
+
+  const handleMouseEnter = () => {
+    setShowModal(true);
+  };
+
+  const handleMouseLeave = () => {
+    setShowModal(false);
+  };
   
 
   useEffect(() => {
@@ -30,9 +40,11 @@ export function MovieDetail() {
       }
     };
 
+
     fetchMovie();
     fetchProviders();
   }, [id]);
+
 
   const budget = movie?.budget ? new Intl.NumberFormat('en-US').format(movie.budget) : 'N/A';
   const revenue = movie?.revenue ? new Intl.NumberFormat('en-US').format(movie.revenue) : 'N/A';
@@ -138,8 +150,13 @@ export function MovieDetail() {
 
           <div className="col-start-3 row-start-1 row-span-3">
             <p className="">Original Title : {movie.original_title} ({movie.original_language})</p>
-            <p className="">Release Date : {new Date(movie.release_date).getFullYear()}</p>
-            <ModalActors id={movie.id} />
+            <p className="">{new Date(movie.release_date).getFullYear()}</p>
+
+            <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Actors
+              <ActorsDropdown />
+            </div>
+
+            
             <div className="">
               <p>Budget: {budget} $ </p>
               <p>Revenues: {revenue} $</p>

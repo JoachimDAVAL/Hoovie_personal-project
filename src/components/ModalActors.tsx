@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
 import { getMovieCredits } from "../services/api";
-import { IActors } from "../@types";
+import { IActors, ModalDetailProps } from "../@types";
+import { Dropdown } from "antd";
 
-const ModalActors: React.FC<ModalProps> = ({ isOpen, onClose, id }) => {
+
+
+const ActorsModal: React.FC<ModalDetailProps>(id: number) => {
   const [actors, setActors] = useState<IActors[]>([]);
 
   useEffect(() => {
@@ -16,15 +19,20 @@ const ModalActors: React.FC<ModalProps> = ({ isOpen, onClose, id }) => {
       };
       fetchActors();
   }, [id]);
+
+ 
+
   return (
-    <ul> 
+    <div className="fixed inset-0 flex justify-center items-center z-50">
+       <div className=" p-6 rounded-lg w-full w-[100vw] h-[90vh] overflow-y-auto">
       Actors: 
       {actors.map(actor => 
-        (<li key={actor.credit_id} className="place-items-center">
+        (<p key={actor.credit_id} className="place-items-center">
           {actor.name}
-        </li>))}
-    </ul>
+        </p>))}
+        </div>
+    </div>
   )
 };
 
-export default ModalActors;
+export default ActorsModal;

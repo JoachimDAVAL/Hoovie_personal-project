@@ -1,10 +1,10 @@
 // Modal.tsx
 import { useState, useEffect } from 'react';
 import { getAllGenres } from '../services/api';
-import { IGenre, ModalProps} from '../@types';
+import { IGenre, ModalCategoryProps} from '../@types';
 import CategoryCard from './CategoryCard';
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+const Modal: React.FC<ModalCategoryProps> = ({ isOpen, onClose }) => {
 
   const [genres, setGenres] = useState<IGenre[]>([]);
   

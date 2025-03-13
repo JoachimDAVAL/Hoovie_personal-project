@@ -1,38 +1,20 @@
-import { useEffect, useState } from "react";
-import { getMovieCredits } from "../services/api";
-import { IActors, ModalDetailProps } from "../@types";
-import { Dropdown } from "antd";
+import { JSX } from "react";
 
+interface ModalProps {
+  isOpen: boolean;
+  content: string | JSX.Element | null;
+}
 
-
-const ActorsModal: React.FC<ModalDetailProps>(id: number) => {
-  const [actors, setActors] = useState<IActors[]>([]);
-
-  useEffect(() => {
-    const fetchActors = async () => {
-        try {
-          const data = await getMovieCredits(Number(id));
-          setActors(data);
-        } catch (error) {
-          console.error("Erreur lors de la récupération des acteurs :", error);
-        }
-      };
-      fetchActors();
-  }, [id]);
-
- 
+export default function Modal({ isOpen, content }: ModalProps) {
+  if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center z-50">
-       <div className=" p-6 rounded-lg w-full w-[100vw] h-[90vh] overflow-y-auto">
-      Actors: 
-      {actors.map(actor => 
-        (<p key={actor.credit_id} className="place-items-center">
-          {actor.name}
-        </p>))}
-        </div>
+    <div className="absolute inset-0 flex justify-end bg-opacity-100 m-y-30 place-items-end">
+      <div className="bg-white p-8 rounded-lg w-1/3 h-1/3 overflow-auto">
+          <div className=" flex text-lg text-black font-semibold">{content}</div>
+      </div>
     </div>
-  )
+  );
 };
 
-export default ActorsModal;
+

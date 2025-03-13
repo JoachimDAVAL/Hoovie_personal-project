@@ -1,23 +1,27 @@
 import { useParams } from "react-router-dom";
 import { IMovie, IWatchProviders, IActors} from "../@types";
-import { useEffect, useState } from "react";
+import { useEffect, useState, JSX } from "react";
 import { getMovieById, getProvidersByMovieId, getMovieCredits } from "../services/api";
 import Star from "../assets/Star.webp";
-
-import ActorsDropdown from "../components/ModalActors";
+import Modal from "../components/ModalActors";
 
 export function MovieDetail() {
   const { id } = useParams<{ id: string }>();
   const [movie, setMovie] = useState<IMovie | null>(null);
   const [providers, setProviders] = useState<IWatchProviders>({});
+  const [actors, setActors] = useState<IActors[]>([]);
+  const [showModal, setShowModal] = useState(false);
+  const [hoveredContent, setHoveredContent] = useState<string | JSX.Element | null>(null);
 
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = (content: string | JSX.Element) => {
+    setHoveredContent(content);
     setShowModal(true);
   };
 
   const handleMouseLeave = () => {
     setShowModal(false);
+    setHoveredContent(null);
   };
   
 
@@ -40,9 +44,19 @@ export function MovieDetail() {
       }
     };
 
+    const fetchActors = async () => {
+      try {
+        const data = await getMovieCredits(Number(id));
+        setActors(data);
+      } catch (error) {
+        console.error("Erreur lors de la récupération des acteurs :", error);
+      }
+    };
+
 
     fetchMovie();
     fetchProviders();
+    fetchActors();
   }, [id]);
 
 
@@ -62,9 +76,33 @@ export function MovieDetail() {
         {!countryProviders.flatrate || countryProviders.flatrate.length === 0 ? <p className="col-start-1">No streaming providers</p> 
         :
           <div className="flex flex-wrap gap-4 col-start-1">
-            <h2>Stream :</h2>
-            {countryProviders.flatrate?.map(provider => (
-              <div key={provider.provider_id} className="flex items-center">
+          <button onMouseEnter={() => handleMouseEnter(
+            <div className="flex flex-wrap items-end">
+              {countryProviders.flatrate?.map(provider => (
+                <div key={provider.provider_id} className="flex ">
+                  {provider.logo_path && (
+                    <img
+                      src={`https://image.tmdb.org/t/p/w45${provider.logo_path}`}
+                      alt={provider.provider_name}
+                      className="h-8 mr-2"
+                    />
+                  )}
+                  <p>{provider.provider_name}</p>
+                </div>
+              ))}
+            </div>
+          )}>Stream</button>
+
+            
+          </div>
+}
+        {!countryProviders.rent || countryProviders.rent.length === 0 ? <p className="col-start-2">No renting providers</p> 
+        :
+        <div className="col-start-2 flex flex-wrap gap-4 ">
+          <button onMouseEnter={() => handleMouseEnter(
+            <div className="flex flex-wrap items-end">
+              {countryProviders.rent?.map(provider => (
+              <div key={provider.provider_id} className="flex">
                 {provider.logo_path && (
                   <img
                     src={`https://image.tmdb.org/t/p/w45${provider.logo_path}`}
@@ -72,27 +110,12 @@ export function MovieDetail() {
                     className="h-8 mr-2"
                   />
                 )}
-                <span>{provider.provider_name}</span>
+                <p>{provider.provider_name}</p>
               </div>
-            ))}
-          </div>
-}
-        {!countryProviders.rent || countryProviders.rent.length === 0 ? <p className="col-start-2">No renting providers</p> 
-        :
-        <div className="col-start-2 flex flex-wrap gap-4 ">
-          <h2>Rent :</h2>
-          {countryProviders.rent?.map(provider => (
-            <div key={provider.provider_id} className="flex items-center">
-              {provider.logo_path && (
-                <img
-                  src={`https://image.tmdb.org/t/p/w45${provider.logo_path}`}
-                  alt={provider.provider_name}
-                  className="h-8 mr-2"
-                />
-              )}
-              <span>{provider.provider_name}</span>
-            </div>
+              
           ))}
+            </div>
+          )} onMouseLeave={() => handleMouseLeave()}>Rent</button>
         </div>
         }
         
@@ -112,15 +135,19 @@ export function MovieDetail() {
         >
           <div className="absolute inset-0 bg-black/50 text-white">
             <div className="container mx-auto h-full flex items-start justify-end flex-col pb-8">
-              <h1 className="text-4xl font-bold mt-10">{movie.title}</h1>
-              {movie.tagline && (
-                    <p className="text-xl text-gray-300 italic mb-4">{movie.tagline}</p>
+              <div>
+                <h1 className="text-4xl font-bold mt-10">{movie.title}</h1>
+                {movie.tagline && (
+                <p className="text-xl text-gray-300 italic mb-4">{movie.tagline}</p>
                   )}
+              </div>
+              < Modal isOpen={showModal} content={hoveredContent} onClose={handleMouseLeave} />
             </div>
+  
           </div>
         </div>
 
-      <div className="place-content-around m-10 grid grid-cols-3 gap-10 text-center items-center bg-white p-4 rounded-xl shadow-xl">
+        <div className="place-content-around m-10 grid grid-cols-3 gap-10 text-center items-center bg-white p-4 rounded-xl shadow-xl">
 
          <div className="col-span-1 col-start-1 row-span-2 place-items-center">
             <div className="  bg-contain bg-center bg-no-repeat flex flex-col items-center justify-center p-4"
@@ -152,9 +179,15 @@ export function MovieDetail() {
             <p className="">Original Title : {movie.original_title} ({movie.original_language})</p>
             <p className="">{new Date(movie.release_date).getFullYear()}</p>
 
-            <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Actors
-              <ActorsDropdown />
-            </div>
+            <button onMouseEnter={() => handleMouseEnter(
+              <div className="flex flex-wrap items-end">
+                {actors?.map(actor => 
+                <p key={actor.cast_id}>
+                  {actor.name}, 
+                </p>)}
+              </div>
+            )}
+              >🎭 Acteurs </button>
 
             
             <div className="">
@@ -162,13 +195,19 @@ export function MovieDetail() {
               <p>Revenues: {revenue} $</p>
            </div>
            
-           <ul className="">Production Companies: 
-            {movie.production_companies?.map(company => 
-              (<li key={company.id} className="place-items-center">
+           <button onMouseEnter={() => handleMouseEnter(
+            <div>
+              {movie.production_companies?.map(company => 
+              (<p key={company.id} className="place-items-center">
                 <img src={company.logo_path ? `https://image.tmdb.org/t/p/w45${company.logo_path}` : "/placeholder.jpg"} alt={company.name} />
                 {company.name}
-              </li>))}
-            </ul>
+              </p>))}
+            </div>
+           )}>Production Companies
+            
+            </button>
+
+
           </div>
 
           {renderProviders()}

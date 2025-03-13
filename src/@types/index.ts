@@ -21,12 +21,6 @@ export interface ModalCategoryProps {
   onClose: () => void;
 }
 
-export interface ModalDetailProps {
-  isOpen: boolean;
-  onClose: () => void;
-  id: number;
-}
-
 export interface ApiResponse<T> {
   results: T[];
 }
@@ -49,7 +43,7 @@ export interface IProvider {
 }
 
 export interface IWatchProviders {
-  [countryCode: string]: {  
+  [countryProviders: string]: {  
     flatrate?: IProvider[];  
     rent?: IProvider[];     
     buy?: IProvider[];      

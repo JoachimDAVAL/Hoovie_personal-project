@@ -4,7 +4,7 @@ import { getAllGenres } from '../services/api';
 import { IGenre, ModalCategoryProps} from '../@types';
 import CategoryCard from './CategoryCard';
 
-const Modal: React.FC<ModalCategoryProps> = ({ isOpen, onClose }) => {
+export default function Modal ({ isOpen, onClose }: ModalCategoryProps) {
 
   const [genres, setGenres] = useState<IGenre[]>([]);
   
@@ -31,4 +31,3 @@ const Modal: React.FC<ModalCategoryProps> = ({ isOpen, onClose }) => {
   );
 };
 
-export default Modal;

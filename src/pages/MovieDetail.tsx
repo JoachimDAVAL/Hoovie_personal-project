@@ -19,12 +19,6 @@ export function MovieDetail() {
     setShowModal(true);
   };
 
-  const handleMouseLeave = () => {
-    setShowModal(false);
-    setHoveredContent(null);
-  };
-  
-
   useEffect(() => {
     const fetchMovie = async () => {
       try {
@@ -72,42 +66,20 @@ export function MovieDetail() {
     if (!countryProviders) return <p className="col-span-2">Aucun fournisseur disponible</p>;
 
     return (
-        <div className="col-span-2 grid grid-cols-2 gap-4">
-        {!countryProviders.flatrate || countryProviders.flatrate.length === 0 ? <p className="col-start-1">No streaming providers</p> 
-        :
-          <div className="flex flex-wrap gap-4 col-start-1">
-          <button onMouseEnter={() => handleMouseEnter(
-            <div className="flex flex-wrap items-end">
-              {countryProviders.flatrate?.map(provider => (
-                <div key={provider.provider_id} className="flex ">
-                  {provider.logo_path && (
-                    <img
-                      src={`https://image.tmdb.org/t/p/w45${provider.logo_path}`}
-                      alt={provider.provider_name}
-                      className="h-8 mr-2"
-                    />
-                  )}
-                  <p>{provider.provider_name}</p>
-                </div>
-              ))}
-            </div>
-          )}>Stream</button>
+        <div className="col-span-2 grid grid-cols-2 gap-4 place-items-center">
 
-            
-          </div>
-}
-        {!countryProviders.rent || countryProviders.rent.length === 0 ? <p className="col-start-2">No renting providers</p> 
+          {!countryProviders.rent || countryProviders.rent.length === 0 ? <p className="col-start-1">No renting providers</p> 
         :
-        <div className="col-start-2 flex flex-wrap gap-4 ">
+        <div className="col-start-1 flex flex-wrap gap-4 ">
           <button onMouseEnter={() => handleMouseEnter(
-            <div className="flex flex-wrap items-end">
+            <div className="flex flex-wrap place-items-end">
               {countryProviders.rent?.map(provider => (
-              <div key={provider.provider_id} className="flex">
+              <div key={provider.provider_id} className="mr-10 mt-5 place-items-center">
                 {provider.logo_path && (
                   <img
                     src={`https://image.tmdb.org/t/p/w45${provider.logo_path}`}
                     alt={provider.provider_name}
-                    className="h-8 mr-2"
+                    className="h-8 mr-2 rounded-lg"
                   />
                 )}
                 <p>{provider.provider_name}</p>
@@ -115,9 +87,35 @@ export function MovieDetail() {
               
           ))}
             </div>
-          )} onMouseLeave={() => handleMouseLeave()}>Rent</button>
+          )} className="text-xl px-8 py-2 bg-[#B8B08D] rounded-full shadow-xl hover:bg-[#202C39] hover:text-white hover:cursor-pointer hover:animate-bounce">Rent</button>
         </div>
         }
+
+
+        {!countryProviders.flatrate || countryProviders.flatrate.length === 0 ? <p className="col-start-2">No streaming providers</p> 
+        :
+          <div className="flex flex-wrap gap-4 col-start-2">
+          <button onMouseEnter={() => handleMouseEnter(
+            <div className="flex flex-wrap place-items-end ">
+              {countryProviders.flatrate?.map(provider => (
+                <div key={provider.provider_id} className="mr-10 mt-5 place-items-center">
+                  {provider.logo_path && (
+                    <img
+                      src={`https://image.tmdb.org/t/p/w45${provider.logo_path}`}
+                      alt={provider.provider_name}
+                      className="h-8 mr-2 rounded-lg "
+                    />
+                  )}
+                  <p>{provider.provider_name}</p>
+                </div>
+              ))}
+            </div>
+          )} className="text-xl px-8 py-2 bg-[#B8B08D] rounded-full shadow-xl hover:bg-[#202C39] hover:text-white hover:cursor-pointer hover:animate-bounce">Stream</button>
+
+            
+          </div>
+}
+        
         
       </div>
     );
@@ -141,7 +139,7 @@ export function MovieDetail() {
                 <p className="text-xl text-gray-300 italic mb-4">{movie.tagline}</p>
                   )}
               </div>
-              < MovieDetailModal isOpen={showModal} content={hoveredContent} onClose={handleMouseLeave} />
+              < MovieDetailModal isOpen={showModal} content={hoveredContent} />
             </div>
   
           </div>
@@ -173,39 +171,44 @@ export function MovieDetail() {
             ))}
           </div>
 
-          <p className="col-start-2 text-xl">{movie.overview}</p>
+          <p className="col-start-2 text-xl rounded-xl shadow-lg p-10">{movie.overview}</p>
 
           <div className="col-start-3 row-start-1 row-span-3">
-            <p className="">Original Title : {movie.original_title} ({movie.original_language})</p>
-            <p className="">{new Date(movie.release_date).getFullYear()}</p>
-
-            <button onMouseEnter={() => handleMouseEnter(
-              <div className="flex flex-wrap items-end">
-                {actors?.map(actor => 
-                <p key={actor.cast_id}>
-                  {actor.name}, 
-                </p>)}
-              </div>
-            )}
-              >🎭 Acteurs </button>
-
-            
-            <div className="">
+            <p className="text-xl">Original Title : {movie.original_title} ({movie.original_language})</p>
+            <p className="mb-10 text-xl">{new Date(movie.release_date).getFullYear()}</p>
+            <div className="mb-10 text-xl">
               <p>Budget: {budget} $ </p>
               <p>Revenues: {revenue} $</p>
-           </div>
-           
-           <button onMouseEnter={() => handleMouseEnter(
-            <div>
-              {movie.production_companies?.map(company => 
-              (<p key={company.id} className="place-items-center">
-                <img src={company.logo_path ? `https://image.tmdb.org/t/p/w45${company.logo_path}` : "/placeholder.jpg"} alt={company.name} />
-                {company.name}
-              </p>))}
             </div>
-           )}>Production Companies
-            
-            </button>
+
+            <div className="flex flex-col items-center">
+
+              <button onMouseEnter={() => handleMouseEnter(
+                <div className="flex flex-wrap items-end">
+                  {actors?.map(actor => 
+                  <p key={actor.cast_id} className="m-1">
+                    {actor.name}, 
+                  </p>)}
+                </div>
+              )}
+              className="mb-10 text-xl px-8 py-2 bg-[#B8B08D] rounded-full shadow-xl hover:bg-[#202C39] hover:text-white hover:cursor-pointer hover:animate-bounce"
+              > Actors 
+              </button>
+
+              <button onMouseEnter={() => handleMouseEnter(
+                  <div className="flex flex-wrap place-items-end">
+                    {movie.production_companies?.map(company => 
+                    (<p key={company.id} className="mr-10 mt-5 place-items-center">
+                      <img src={company.logo_path ? `https://image.tmdb.org/t/p/w45${company.logo_path}` : "/placeholder.jpg"} alt={company.name} />
+                      {company.name}
+                    </p>))}
+                  </div>
+              )} className="mb-10 text-xl px-8 py-2 bg-[#B8B08D] rounded-full shadow-xl hover:bg-[#202C39] hover:text-white hover:cursor-pointer hover:animate-bounce"
+              > Production Companies
+              </button>
+
+            </div>
+
 
 
           </div>

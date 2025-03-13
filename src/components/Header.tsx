@@ -19,7 +19,7 @@ export default function Header() {
   };
 
   return (
-    <div>
+    <div >
       <header className='place-self-center max-h-20 ml-200'>
         <Link to='/'>
           <div className='flex items-center mr-200 mt-10'>

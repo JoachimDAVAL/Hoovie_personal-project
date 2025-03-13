@@ -56,7 +56,7 @@ export default function SearchBar() {
         placeholder="Search..."
         value={state.query}
         onChange={handleSearchChange}
-        className="mr-80 rounded-xl border-solid shadow-xl max-h-10 min-w-80 focus:ring-2 focus:ring-blue-500"
+        className="mr-80 rounded-xl shadow-xs border-solid max-h-10 min-w-80 bg-white py-1 hover:shadow-xl outline-none focus:ring-4 focus:ring-white"
       />
 
       {state.loading && <span className="ml-2 text-blue-500 animate-spin">⏳</span>}

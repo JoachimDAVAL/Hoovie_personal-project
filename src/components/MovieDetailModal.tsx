@@ -5,7 +5,7 @@ interface ModalProps {
   content: string | JSX.Element | null;
 }
 
-export default function Modal({ isOpen, content }: ModalProps) {
+export default function MovieDetailModal({ isOpen, content }: ModalProps) {
   if (!isOpen) return null;
 
   return (

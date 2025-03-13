@@ -3,7 +3,7 @@ import { IMovie, IWatchProviders, IActors} from "../@types";
 import { useEffect, useState, JSX } from "react";
 import { getMovieById, getProvidersByMovieId, getMovieCredits } from "../services/api";
 import Star from "../assets/Star.webp";
-import Modal from "../components/ModalActors";
+import MovieDetailModal from "../components/MovieDetailModal";
 
 export function MovieDetail() {
   const { id } = useParams<{ id: string }>();
@@ -141,7 +141,7 @@ export function MovieDetail() {
                 <p className="text-xl text-gray-300 italic mb-4">{movie.tagline}</p>
                   )}
               </div>
-              < Modal isOpen={showModal} content={hoveredContent} onClose={handleMouseLeave} />
+              < MovieDetailModal isOpen={showModal} content={hoveredContent} onClose={handleMouseLeave} />
             </div>
   
           </div>

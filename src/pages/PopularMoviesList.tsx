@@ -53,12 +53,16 @@ export default function MoviesList() {
     return () => observer.disconnect();
   }, [hasMore]);
 
+  if (!movies) {
+    return <div className="fixed inset-0 flex justify-center items-center"> <div className="loader"></div> </div>;
+  }
+
   return (
-    <div className="grid grid-cols-5 gap-4 pl-10 pr-10">
+    <div className="grid grid-cols-5 gap-4 pl-10 pr-10 content-center items-center">
 
         {movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
 
-        {hasMore && <div ref={loader} className="text-center">Chargement...</div>}
+        {hasMore &&  (<div className="flex justify-center items-center mt-4"> <div ref={loader} className="loader"></div> </div>) }
 
     </div>
   );

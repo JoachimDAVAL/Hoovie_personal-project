@@ -24,7 +24,7 @@ export default function Header() {
         <Link to='/'>
           <div className='flex items-center mr-200 mt-10'>
             <img src={logo} className='max-h-20 mr-5' alt='logo' />
-            <h1 className=' text-3xl'>Hoovie</h1>
+            <h1 className=' text-6xl font-bold'>Hoovie</h1>
           </div>
         </Link>
     </header>

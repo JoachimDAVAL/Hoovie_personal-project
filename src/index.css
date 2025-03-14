@@ -1,19 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,100..900;1,100..900&family=Bebas+Neue&family=Big+Shoulders+Inline:opsz,wght@10..72,100..900&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Quicksand:wght@300..700&family=Sixtyfour+Convergence&display=swap');
-
-
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Big+Shoulders+Stencil:opsz,wght@10..72,500&family=Emblema+One&display=swap');
 @import "tailwindcss";
 
+* {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Bebas Neue, sans-serif;
+  font-family: 'Big Shoulders Stencil', sans-serif;
 
 }
 
 header {
-  font-family: 'Sixtyfour Convergence', sans-serif;
+  font-family: 'Emblema One', sans-serif;
 }
 
-h2 {
-  /* font-family: BigShouldersInline, sans-serif; */
-  font-family: Bebas Neue, sans-serif;
-  /* font-family: QuickSand, sans-serif; */
+.movie-title {
+  font-family: 'Big Shoulders Stencil', sans-serif;
+}
+
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #C32126;
+  -webkit-mask: radial-gradient(circle closest-side at 50% 40%,#0000 94%, #000);
+  transform-origin: 50% 40%;
+  animation: l25 1s infinite linear;
+}
+@keyframes l25 {
+  100% {transform: rotate(1turn)}
+}
+
+.movie-detail-description {
+  font-family: 'Bebas Neue', sans-serif;
 }

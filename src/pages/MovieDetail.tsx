@@ -58,7 +58,8 @@ export function MovieDetail() {
   const revenue = movie?.revenue ? new Intl.NumberFormat('en-US').format(movie.revenue) : 'N/A';
 
   if (!movie) {
-    return <p>Chargement du film...</p>;
+    return <div className="fixed inset-0 flex justify-center items-center"> <div className="loader"></div> </div>;
+    
   }
 
   const renderProviders = () => {
@@ -145,7 +146,7 @@ export function MovieDetail() {
           </div>
         </div>
 
-        <div className="place-content-around m-10 grid grid-cols-3 gap-10 text-center items-center bg-white p-4 rounded-xl shadow-xl">
+        <div className="movie-detail-description place-content-around m-10 grid grid-cols-3 gap-10 text-center items-center bg-white p-4 rounded-xl shadow-xl">
 
          <div className="col-span-1 col-start-1 row-span-2 place-items-center">
             <div className="  bg-contain bg-center bg-no-repeat flex flex-col items-center justify-center p-4"

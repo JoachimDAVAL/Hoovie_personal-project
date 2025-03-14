@@ -11,12 +11,12 @@ export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
-    setIsModalOpen(true);
+    setIsModalOpen(!isModalOpen);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  // const closeModal = () => {
+  //   setIsModalOpen(false);
+  // };
 
   return (
     <div >
@@ -35,7 +35,7 @@ export default function Header() {
       <SearchBar />
     </div>
 
-    <Modal isOpen={isModalOpen} onClose={closeModal}/>
+    <Modal isOpen={isModalOpen}/>
 
     </div>
   )

@@ -18,7 +18,6 @@ export interface IMovie {
 
 export interface ModalCategoryProps {
   isOpen: boolean;
-  onClose: () => void;
 }
 
 export interface ApiResponse<T> {

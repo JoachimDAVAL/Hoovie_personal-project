@@ -34,3 +34,12 @@ header {
 .movie-detail-description {
   font-family: 'Bebas Neue', sans-serif;
 }
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hidden {
+  /* -ms-overflow-style: none;
+  scrollbar-width: none; */
+}

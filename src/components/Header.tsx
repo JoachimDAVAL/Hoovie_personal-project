@@ -30,7 +30,7 @@ export default function Header() {
     </header>
     <div className='flex justify-between'>
       <div>
-        <img onClick={openModal} src={categoryIcon} alt='logo' className='max-w-15 max-h-10 ml-10 mb-5'/>
+        <img onClick={openModal} src={categoryIcon} alt='logo' className='max-w-15 max-h-10 ml-10 mb-5 cursor-pointer'/>
       </div>
       <SearchBar />
     </div>

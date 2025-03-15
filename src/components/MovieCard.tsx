@@ -41,7 +41,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
       {showDetails && (
         <Link to={`/movie/${movie.id}`}>
           <div 
-          className="absolute bg-white bg-opacity-100 top-0 left-0 right-0 bottom-0 text-white p-4 rounded-xl flex flex-col justify-around items-center shadow-md overflow-hidden transition-transform hover:scale-105"
+          className="absolute bg-white bg-opacity-100 top-0 left-0 right-0 bottom-0 text-white p-4 rounded-xl flex flex-col justify-around items-center shadow-md overflow-hidden transition-transform hover:scale-105 duration-500"
           style={{backgroundImage: movie.poster_path
             ? `url(https://image.tmdb.org/t/p/w342${movie.poster_path})`
             : "url(/placeholder.jpg)",

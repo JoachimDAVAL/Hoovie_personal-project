@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { getAllGenres } from '../services/api';
 import { IGenre, ModalCategoryProps } from '../@types';
 import CategoryCard from './CategoryCard';
+import rightArrow from '../assets/rightArrow.png';
+import leftArrow from '../assets/leftArrow.png';
 
 export default function Modal({ isOpen }: ModalCategoryProps) {
   const [genres, setGenres] = useState<IGenre[]>([]);
@@ -9,7 +11,7 @@ export default function Modal({ isOpen }: ModalCategoryProps) {
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
-      const scrollAmount = 200;
+      const scrollAmount = 800;
       const newScrollPosition =
         direction === 'left'
           ? scrollRef.current.scrollLeft - scrollAmount
@@ -34,16 +36,16 @@ export default function Modal({ isOpen }: ModalCategoryProps) {
       {/* Flèche gauche */}
       <button
         onClick={() => scroll('left')}
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-gray-800 text-white p-2 rounded-full"
+        className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 text-white p-2 rounded-full ml-5 "
       >
-        &lt;
+        <img src={leftArrow} alt='left arrow' className='max-h-10 hover:scale-150 transform duration-300 cursor-pointer' />
       </button>
 
       {/* Conteneur avec éléments défilants */}
-      <div className="overflow-x-hidden whitespace-nowrap py-4 px-2">
+      <div className="overflow-x-hidden whitespace-nowrap py-4 px-2 mx-20">
         <div
-          ref={scrollRef}
-          className="flex space-x-4 overflow-x-auto scroll-smooth scrollbar-hide"
+          ref={scrollRef}                                                                                                                                                     
+          className="flex space-x-4 overflow-x-auto scroll-smooth scrollbar-hidden"
         >
           {genres.map((genre) => (
             <CategoryCard key={genre.id} genre={genre} />
@@ -54,9 +56,9 @@ export default function Modal({ isOpen }: ModalCategoryProps) {
       {/* Flèche droite */}
       <button
         onClick={() => scroll('right')}
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-gray-800 text-white p-2 rounded-full"
+        className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 text-white p-2 rounded-full mr-5"
       >
-        &gt;
+     <img src={rightArrow} alt='right arrow' className='max-h-10 hover:scale-150 transform duration-300 cursor-pointer'/>
       </button>
 
     </div>

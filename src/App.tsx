@@ -7,26 +7,28 @@ import {MovieDetail} from './pages/MovieDetail';
 import MoviesByGenre from './pages/Movies ByGenre';
 import { SearchProvider } from './contexts/SearchContext';
 import SearchPage from './pages/SearchPage';
+import { MovieFilterProvider } from './contexts/FilterAndSortByContext';
 
 
 function App() {
   
   return (
+    <MovieFilterProvider>
     <SearchProvider>
       <div className='App'>
         <Header />
         <main>
           <Routes>
-            <Route path="/" element={<PopularMoviesList />} />
+            <Route path="/" element={<MoviesByGenre />} />
             <Route path="/movie/:id" element={<MovieDetail />} />
-            <Route path="/movies/genre/:id" element={<MoviesByGenre />} />
+            {/* <Route path="/movies/genre" element={<MoviesByGenre />} /> */}
             <Route path="/search" element={<SearchPage />} />
           </Routes>
         </main>
         <Footer />
       </div>
     </SearchProvider>
-
+    </MovieFilterProvider>
   )
 }
 

@@ -6,7 +6,6 @@ interface SearchState {
   movies: IMovie[];
   loading: boolean;
   error: string | null;
-  // page: number;
 }
 
 type SearchAction = 

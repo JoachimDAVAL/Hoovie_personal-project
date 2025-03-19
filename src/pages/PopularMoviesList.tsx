@@ -8,6 +8,8 @@ export default function MoviesList() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
 
+  
+
   const loader = useRef(null);
 
   useEffect(() => {

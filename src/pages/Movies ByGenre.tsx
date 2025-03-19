@@ -1,61 +1,62 @@
-import { useState, useEffect, useRef } from "react";
-import { IMovie } from "../@types";
+// import { useState, useEffect, useRef } from "react";
+// import { IMovie } from "../@types";
 import MovieCard from "../components/MovieCard";
-import { getMoviesByGenre } from "../services/api";
-import { useParams } from "react-router-dom";
-
-
+// import { getMoviesByGenre } from "../services/api";
+// import { useParams } from "react-router-dom";
+import { useMovieFilter } from "../contexts/FilterAndSortByContext";
 
 export default function MoviesByGenre() {
-  const [movies, setMovies] = useState<IMovie[]>([]);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
-  const {id}  = useParams<{ id: string }>();
+  // const [movies, setMovies] = useState<IMovie[]>([]);
+  // const [page, setPage] = useState(1);
+  // const [hasMore, setHasMore] = useState(true);
+  // const {id}  = useParams<{ id: string }>();
 
-  const loader = useRef(null);
+  const { movies} = useMovieFilter();
 
-  useEffect(() => {
-    setMovies([]);
-    setPage(1);
-    setHasMore(true);
-  }, [id]);
+  // const loader = useRef(null);
 
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const data = await getMoviesByGenre(Number(id), page);
+  // useEffect(() => {
+  //   // setMovies([]);
+  //   setPage(1);
+  //   setHasMore(true);
+  // }, [id]);
 
-        if (data.length === 0) {
-          setHasMore(false);
-        } else {
-          setMovies((prevMovies) => [...prevMovies, ...data]);
-        }
-      } catch (error) {
-        console.error("Erreur lors de la récupération des films :", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchMovies = async () => {
+  //     try {
+  //       const data = await getMoviesByGenre(Number(id), page);
 
-    if(hasMore) {
-      fetchMovies();
-    }
-  }, [id, page, hasMore]);
+  //       if (data.length === 0) {
+  //         setHasMore(false);
+  //       } else {
+  //         setMovies((prevMovies) => [...prevMovies, ...data]);
+  //       }
+  //     } catch (error) {
+  //       console.error("Erreur lors de la récupération des films :", error);
+  //     }
+  //   };
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          setPage((prevPage) => prevPage + 1);
-        }
-      },
-      { threshold: 1 }
-    );
+  //   if(hasMore) {
+  //     fetchMovies();
+  //   }
+  // }, [id, page, hasMore]);
 
-    if (loader.current) {
-      observer.observe(loader.current);
-    }
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       if (entries[0].isIntersecting && hasMore) {
+  //         setPage((prevPage) => prevPage + 1);
+  //       }
+  //     },
+  //     { threshold: 1 }
+  //   );
 
-    return () => observer.disconnect();
-  }, [hasMore]);
+  //   if (loader.current) {
+  //     observer.observe(loader.current);
+  //   }
+
+  //   return () => observer.disconnect();
+  // }, [hasMore]);
 
 
 
@@ -64,7 +65,7 @@ export default function MoviesByGenre() {
 
       {movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
 
-      {hasMore &&  (<div className="flex justify-center items-center mt-4"> <div ref={loader} className="loader"></div> </div>) }
+      {/* {hasMore &&  (<div className="flex justify-center items-center mt-4"> <div ref={loader} className="loader"></div> </div>) } */}
       
     </div>
   )

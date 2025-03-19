@@ -175,7 +175,7 @@ export async function getYears() {
 
     const years = Array.from({ length: currentYear - oldestYear + 1 }, (_, index) => oldestYear + index);
 
-    return years;
+    return years.reverse();
   } catch (error) {
     console.error("Erreur lors de la récupération des années : ", error);
     throw new Error("Impossible de récupérer les années.");

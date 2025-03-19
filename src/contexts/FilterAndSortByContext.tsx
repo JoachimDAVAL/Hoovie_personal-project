@@ -8,7 +8,7 @@ interface IMovieFilterContext {
   selectedYear: number | undefined;
   selectedVoteAverage: number | undefined;
   selectedSort: string;
-  setSelectedGenre: (genreId: number | undefined) => void;
+  setSelectedGenre: React.Dispatch<React.SetStateAction<number | undefined>>;
   setSelectedYear: (year: number | undefined) => void;
   setSelectedVoteAverage: (vote: number | undefined) => void;
   setSelectedSort: (sort: string) => void;

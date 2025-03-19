@@ -1,12 +1,9 @@
  import { useState, useEffect } from "react";
-
-
- 
- 
+import { getYears } from "../services/api";
 
 
 
-function SortByDropdown({ selectedSort, setSelectedSort }: { selectedSort: string; setSelectedSort: (value: string) => void }) {
+export function SortByDropdown({ selectedSort, setSelectedSort }: { selectedSort: string; setSelectedSort: (value: string) => void }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const sortByOptions = [
@@ -19,18 +16,18 @@ function SortByDropdown({ selectedSort, setSelectedSort }: { selectedSort: strin
   ];
 
   return (
-    <div className='relative inline-block'
+    <div className='relative inline-block ml-20 hover:bg-[#C32126]'
     onMouseEnter={() => setIsOpen(true)}
     onMouseLeave={() => setIsOpen(false)}
     >
-      <div className="bg-gray-800 text-white px-4 py-2 rounded cursor-pointer"
+      <div className="bg-black text-white px-4 py-2 rounded cursor-pointer hover:bg-[#C32126]"
       onClick={() => setSelectedSort('')}
       >
         {sortByOptions.find((option) => option.value === selectedSort)?.label || 'Sort by'}
       </div>
 
       {isOpen && (
-        <ul className="absolute left-0 mt-1 bg-white shadow-lg rounded w-48 border border-gray-300 z-50">
+        <ul className="absolute left-0 bg-white shadow-lg rounded w-48 border border-gray-300 z-50">
           {sortByOptions.map((option) => (
             <li key={option.value} onClick={() => setSelectedSort(option.value)} className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
               {option.label}
@@ -42,7 +39,7 @@ function SortByDropdown({ selectedSort, setSelectedSort }: { selectedSort: strin
   )
 };
 
-function VoteAverageDropdown({ selectedVoteAverage, setSelectedVoteAverage }: { selectedVoteAverage: number | undefined; setSelectedVoteAverage: (value: number | undefined) => void }) {
+export function VoteAverageDropdown({ selectedVoteAverage, setSelectedVoteAverage }: { selectedVoteAverage: number | undefined; setSelectedVoteAverage: (value: number | undefined) => void }) {
   const [isOpen, setIsOpen] = useState(false);
 
     const votesOptions = [
@@ -58,18 +55,18 @@ function VoteAverageDropdown({ selectedVoteAverage, setSelectedVoteAverage }: { 
     { value: 10, label: '10' },
   ];
   return (
-    <div className='relative inline-block'
+    <div className='relative inline-block mr-10 hover:bg-[#C32126]'
     onMouseEnter={() => setIsOpen(true)}
     onMouseLeave={() => setIsOpen(false)}
     >
-      <div className="bg-gray-800 text-white px-4 py-2 rounded cursor-pointer"
+      <div className="bg-black text-white px-4 py-2 rounded cursor-pointer hover:bg-[#C32126]"
       onClick={() => setSelectedVoteAverage(undefined)}
       >
         {votesOptions.find((vote) => vote.value === selectedVoteAverage)?.label || 'Vote'}
       </div>
 
       {isOpen && (
-        <ul className="absolute left-0 mt-1 bg-white shadow-lg rounded w-48 border border-gray-300 z-50">
+        <ul className="absolute left-0 bg-white shadow-lg rounded w-48 border border-gray-300 z-50">
           {votesOptions.map((vote) => (
             <li key={vote.value} onClick={() => setSelectedVoteAverage(vote.value)} className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
               {vote.label}
@@ -81,20 +78,29 @@ function VoteAverageDropdown({ selectedVoteAverage, setSelectedVoteAverage }: { 
   )
 };
 
-  function YearsDropdown({ selectedYear, setSelectedYear }: { selectedYear: number | undefined; setSelectedYear: (value: number | undefined) => void }) {
+  export function YearsDropdown({ selectedYear, setSelectedYear }: { selectedYear: number | undefined; setSelectedYear: (value: number | undefined) => void }) {
     const [isOpen, setIsOpen] = useState(false);
+    const [years, setYears] = useState<number[]>([]);
+
+    useEffect(() => {
+      const fetchYears = async () => {
+        const years = await getYears();
+        setYears(years);
+      };
+      fetchYears();
+    }, []);
     return (
-      <div className='relative inline-block'
+      <div className='relative inline-block mr-10'
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
       >
-        <div className="bg-gray-800 text-white px-4 py-2 rounded cursor-pointer"
+        <div className="bg-black text-white px-4 py-2 rounded cursor-pointer hover:bg-[#C32126]"
         onClick={() => setSelectedYear(undefined)}>
           {selectedYear || 'Years'}
         </div>
 
         {isOpen && (
-          <ul className="absolute left-0 mt-1 bg-white shadow-lg rounded w-48 border border-gray-300 overflow-y-auto max-h-48 z-50">
+          <ul className="absolute left-0 bg-white shadow-lg rounded w-48 border border-gray-300 overflow-y-auto max-h-48 z-50">
             {years.map((year) => (
               <li key={year} onClick={() => setSelectedYear(year)} className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
                 {year}
@@ -107,4 +113,3 @@ function VoteAverageDropdown({ selectedVoteAverage, setSelectedVoteAverage }: { 
   };
 
 
-export default {SortByDropdown, VoteAverageDropdown, YearsDropdown};

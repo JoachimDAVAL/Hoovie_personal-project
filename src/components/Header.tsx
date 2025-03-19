@@ -14,10 +14,6 @@ export default function Header() {
     setIsModalOpen(!isModalOpen);
   };
 
-  // const closeModal = () => {
-  //   setIsModalOpen(false);
-  // };
-
   return (
     <div >
       <header className='place-self-center max-h-20 ml-200'>

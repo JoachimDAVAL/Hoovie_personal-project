@@ -1,10 +1,14 @@
 import { MovieCardProps } from "../@types";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { BsFillStarFill } from "react-icons/bs";
+import { motion } from "motion/react";
+import defaultImage from "../assets/defaultImage.jpg";
 
 export default function MovieCard({ movie }: MovieCardProps) {
   const [showDetails, setShowDetails] = useState(false);
+
+  const constraintsRef = useRef<HTMLDivElement>(null);
 
   const truncateText = (text: string, maxLength: number) => {
     return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
@@ -19,20 +23,27 @@ export default function MovieCard({ movie }: MovieCardProps) {
   };
 
   return (
-    <div
-      className="relative place-items-center "
+    <motion.div
+      className="relative place-items-center"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      ref={constraintsRef}
+      
+    >
+      <motion.div 
+      drag
+      dragConstraints={constraintsRef}
+      dragElastic={0.1}
     >
       
         <img
           src={
             movie.poster_path
               ? `https://image.tmdb.org/t/p/w342${movie.poster_path}`
-              : "/placeholder.jpg"
+              : defaultImage
           }
           alt={movie.title}
-          className="max-h-200 rounded-xl " 
+          className="w-[100] h-[200] md:w-[200] md:h[300]  lg:w-[350px] lg:h-[400px] 2xl:w-[350px] 2xl:h-[500px] object-cover rounded-xl" 
           loading="lazy"
         />
         <h2 className="movie-title text-center font-extrabold text-2xl">{movie.title}</h2>
@@ -44,7 +55,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
           className="absolute bg-white bg-opacity-100 top-0 left-0 right-0 bottom-0 text-white p-4 rounded-xl flex flex-col justify-around items-center shadow-md overflow-hidden transition-transform hover:scale-105 duration-500"
           style={{backgroundImage: movie.poster_path
             ? `url(https://image.tmdb.org/t/p/w342${movie.poster_path})`
-            : "url(/placeholder.jpg)",
+            : `url(${defaultImage})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           backgroundPosition: "center"
@@ -64,6 +75,8 @@ export default function MovieCard({ movie }: MovieCardProps) {
             </div>
         </Link>
       )}
-    </div>
+
+        </motion.div>
+    </motion.div>
   );
 }

@@ -8,10 +8,13 @@ interface IMovieFilterContext {
   selectedYear: number | undefined;
   selectedVoteAverage: number | undefined;
   selectedSort: string;
+  hasMore: boolean;
   setSelectedGenre: React.Dispatch<React.SetStateAction<number | undefined>>;
   setSelectedYear: (year: number | undefined) => void;
   setSelectedVoteAverage: (vote: number | undefined) => void;
   setSelectedSort: (sort: string) => void;
+  loadMoreMovies: () => void;
+  
 }
 
 const MovieFilterContext = createContext<IMovieFilterContext | undefined>(undefined);
@@ -23,18 +26,61 @@ export function MovieFilterProvider({ children }: { children: ReactNode }) {
   const [selectedVoteAverage, setSelectedVoteAverage] = useState<number | undefined>(undefined);
   const [selectedSort, setSelectedSort] = useState<string>("popularity.desc");
 
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+
+  const fetchMovies = async (reset = false) => {
+    if (isLoading) return;
+    setIsLoading(true);
+
+    try {
+
+      if (reset) {
+        setMovies([]);
+        setPage(1);
+        setHasMore(true);
+      } 
+
+      const newPage = reset ? 1: page;
+      const data = await getFilteredMovies(selectedSort, newPage, selectedGenre, selectedYear, selectedVoteAverage);
+
+      if (data.length === 0) {
+        setHasMore(false);
+      } else {
+        setMovies((prevMovies) => {
+          const uniqueMovies = [...new Map([...prevMovies, ...data].map((m) => [m.id, m])).values()];
+          return uniqueMovies;
+
+      });
+      setPage((prevPage) => prevPage + 1);
+    }
+    } catch (error) {
+      console.error("Erreur lors de la récupération des films : ", error);
+      throw new Error("Impossible de récupérer les films");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+
   useEffect(() => {
-    const fetchMovies = async () => {
-      const data = await getFilteredMovies(selectedSort, selectedGenre, selectedYear, selectedVoteAverage);
-      setMovies(data);
-    };
-    fetchMovies();
+    
+    fetchMovies(true);
   }, [selectedGenre, selectedYear, selectedVoteAverage, selectedSort]);
+
+  const loadMoreMovies = () => {
+    if (!isLoading && hasMore) {
+      fetchMovies();
+    }
+  }
 
   return (
     <MovieFilterContext.Provider
       value={{
         movies,
+        hasMore,
         selectedGenre: selectedGenre,
         selectedYear,
         selectedVoteAverage,
@@ -43,6 +89,7 @@ export function MovieFilterProvider({ children }: { children: ReactNode }) {
         setSelectedYear,
         setSelectedVoteAverage,
         setSelectedSort,
+        loadMoreMovies,
       }}
     >
       {children}

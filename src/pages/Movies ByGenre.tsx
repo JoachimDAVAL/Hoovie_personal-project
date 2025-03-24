@@ -1,71 +1,45 @@
-// import { useState, useEffect, useRef } from "react";
-// import { IMovie } from "../@types";
-import MovieCard from "../components/MovieCard";
-// import { getMoviesByGenre } from "../services/api";
-// import { useParams } from "react-router-dom";
+import { useRef, useEffect } from "react";
 import { useMovieFilter } from "../contexts/FilterAndSortByContext";
+import MovieCard from "../components/MovieCard";
+import HomeText from "../components/HomeText";
 
 export default function MoviesByGenre() {
-  // const [movies, setMovies] = useState<IMovie[]>([]);
-  // const [page, setPage] = useState(1);
-  // const [hasMore, setHasMore] = useState(true);
-  // const {id}  = useParams<{ id: string }>();
 
-  const { movies} = useMovieFilter();
+const { movies, hasMore, loadMoreMovies} = useMovieFilter();
+                                                                                                                                                             
 
-  // const loader = useRef(null);
+const loader = useRef(null);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          loadMoreMovies();
+        }
+      },
+      { threshold: 1 }
+    );
 
-  // useEffect(() => {
-  //   // setMovies([]);
-  //   setPage(1);
-  //   setHasMore(true);
-  // }, [id]);
+    if (loader.current) {
+      observer.observe(loader.current);
+    }
 
-  // useEffect(() => {
-  //   const fetchMovies = async () => {
-  //     try {
-  //       const data = await getMoviesByGenre(Number(id), page);
-
-  //       if (data.length === 0) {
-  //         setHasMore(false);
-  //       } else {
-  //         setMovies((prevMovies) => [...prevMovies, ...data]);
-  //       }
-  //     } catch (error) {
-  //       console.error("Erreur lors de la récupération des films :", error);
-  //     }
-  //   };
-
-  //   if(hasMore) {
-  //     fetchMovies();
-  //   }
-  // }, [id, page, hasMore]);
-
-  // useEffect(() => {
-  //   const observer = new IntersectionObserver(
-  //     (entries) => {
-  //       if (entries[0].isIntersecting && hasMore) {
-  //         setPage((prevPage) => prevPage + 1);
-  //       }
-  //     },
-  //     { threshold: 1 }
-  //   );
-
-  //   if (loader.current) {
-  //     observer.observe(loader.current);
-  //   }
-
-  //   return () => observer.disconnect();
-  // }, [hasMore]);
+    return () => observer.disconnect();
+  }, [loadMoreMovies]);
 
 
 
   return (
-    <div className="grid grid-cols-5 gap-4 pl-10 pr-10 content-center items-center">
+    <div>
 
-      {movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
+      {/* <div className="relative h-[90vh]">
+        <HomeText />
+      </div> */}
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4 pl-10 pr-10 content-center items-center">
+        {movies.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
 
-      {/* {hasMore &&  (<div className="flex justify-center items-center mt-4"> <div ref={loader} className="loader"></div> </div>) } */}
+        {hasMore &&  (<div className="flex justify-center items-center mt-4"> <div ref={loader} className="loader"></div> </div>) }
+      </div>
+
       
     </div>
   )

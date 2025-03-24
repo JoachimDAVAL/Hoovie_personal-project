@@ -64,10 +64,10 @@ export function MovieDetail() {
 
   const renderProviders = () => {
     const countryProviders = providers['FR']; 
-    if (!countryProviders) return <p className="col-span-2">Aucun fournisseur disponible</p>;
+    if (!countryProviders) return <p className="col-span-2 mt-5 md:mt-0">Aucun fournisseur disponible</p>;
 
     return (
-        <div className="col-span-2 grid grid-cols-2 gap-4 place-items-center">
+        <div className="col-span-2 my-10 md:my-0 grid grid-cols-2 gap-4 place-items-center">
 
           {!countryProviders.rent || countryProviders.rent.length === 0 ? <p className="col-start-1">No renting providers</p> 
         :
@@ -75,7 +75,7 @@ export function MovieDetail() {
           <button onMouseEnter={() => handleMouseEnter(
             <div className="flex flex-wrap place-items-end">
               {countryProviders.rent?.map(provider => (
-              <div key={provider.provider_id} className="mr-10 mt-5 place-items-center">
+              <div key={provider.provider_id} className="md:mr-10 md:mt-5 place-items-center">
                 {provider.logo_path && (
                   <img
                     src={`https://image.tmdb.org/t/p/w45${provider.logo_path}`}
@@ -99,7 +99,7 @@ export function MovieDetail() {
           <button onMouseEnter={() => handleMouseEnter(
             <div className="flex flex-wrap place-items-end ">
               {countryProviders.flatrate?.map(provider => (
-                <div key={provider.provider_id} className="mr-10 mt-5 place-items-center">
+                <div key={provider.provider_id} className=" md:mr-10 md:mt-5 place-items-center">
                   {provider.logo_path && (
                     <img
                       src={`https://image.tmdb.org/t/p/w45${provider.logo_path}`}
@@ -123,33 +123,33 @@ export function MovieDetail() {
   };
 
   return (
-    <div className="place-items-center">
+    <div className=" place-items-center">
       
-      <div className="p-10 items-center min-h-screen bg-gray-100">
+      <div className=" py-10 items-center min-h-screen bg-gray-100">
         <div
-          className="h-[60vh] w-[100vw] bg-cover bg-center bg-fixed relative"
+          className="h-[30vh] lg:h-[40vh] 2xl:h-[50vh] w-full bg-cover bg-center bg-fixed relative"
           style={{
             backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
           }}
         >
           <div className="absolute inset-0 bg-black/50 text-white">
-            <div className="container mx-auto h-full flex items-start justify-end flex-col pb-8">
-              <div>
+            <div className="container ml-5 md:mx-auto  h-full flex items-start justify-end flex-col pb-8">
+              <div className="w-[50vw]">
                 <h1 className="text-4xl font-bold mt-10">{movie.title}</h1>
                 {movie.tagline && (
                 <p className="text-xl text-gray-300 italic mb-4">{movie.tagline}</p>
                   )}
               </div>
-              < MovieDetailModal isOpen={showModal} content={hoveredContent} />
+              < MovieDetailModal isOpen={showModal} content={hoveredContent} className="hidden lg:block"/>
             </div>
   
           </div>
         </div>
 
-        <div className="movie-detail-description place-content-around m-10 grid grid-cols-3 gap-10 text-center items-center bg-white p-4 rounded-xl shadow-xl">
+        <div className="movie-detail-description place-content-around md:m-10 grid grid-cols-1 md:grid-cols-3 md:gap-10 text-center items-center bg-white md:p-4 rounded-xl shadow-xl">
 
-         <div className="col-span-1 col-start-1 row-span-2 place-items-center">
-            <div className="  bg-contain bg-center bg-no-repeat flex flex-col items-center justify-center p-4"
+         <div className="my-10 md:my-0 row-span-1 row-start-4 md:row-span-2 md:row-start-1 md:col-start-1 place-items-center">
+            <div className=" bg-contain bg-center bg-no-repeat flex flex-col items-center justify-center p-4"
             style={{
               backgroundImage: `url(${Star})`,
               width: "300px", 
@@ -165,19 +165,19 @@ export function MovieDetail() {
             <p className="text-sm">Vote count: {movie.vote_count}</p>
           </div>
 
-          <div className="col-start-2">
+          <div className="mt-10 md:mt-0 row-start-1 md:col-start-2 col-span-1">
             {movie.genres?.map((genre) => (
               <span key={genre.id} className="px-3 py-1 bg-gray-100 rounded-full text-l mr-2">
                 {genre.name}</span>
             ))}
           </div>
 
-          <p className="col-start-2 text-xl rounded-xl shadow-lg p-10">{movie.overview}</p>
+          <p className="w-[100vw] md:w-[30vw] col-start-1 col-span-1 md:col-start-2 text-xl rounded-xl shadow-lg p-10">{movie.overview}</p>
 
-          <div className="col-start-3 row-start-1 row-span-3">
+          <div className="mb-10 md:my-0 row-start-5 col-start-1 md:col-start-3 md:row-start-1 md:row-span-3">
             <p className="text-xl">Original Title : {movie.original_title} ({movie.original_language})</p>
-            <p className="mb-10 text-xl">{new Date(movie.release_date).getFullYear()}</p>
-            <div className="mb-10 text-xl">
+            <p className="mb-5 md:mb-10 text-xl">{new Date(movie.release_date).getFullYear()}</p>
+            <div className="mb-5 md:mb-10  text-xl">
               <p>Budget: {budget} $ </p>
               <p>Revenues: {revenue} $</p>
             </div>
@@ -192,7 +192,7 @@ export function MovieDetail() {
                   </p>)}
                 </div>
               )}
-              className="mb-10 text-xl px-8 py-2 bg-[#B8B08D] rounded-full shadow-xl hover:bg-[#202C39] hover:text-white hover:cursor-pointer hover:animate-bounce"
+              className="mb-5 md:mb-10 text-xl px-8 py-2 bg-[#B8B08D] rounded-full shadow-xl hover:bg-[#202C39] hover:text-white hover:cursor-pointer hover:animate-bounce"
               > Actors 
               </button>
 
@@ -204,7 +204,7 @@ export function MovieDetail() {
                       {company.name}
                     </p>))}
                   </div>
-              )} className="mb-10 text-xl px-8 py-2 bg-[#B8B08D] rounded-full shadow-xl hover:bg-[#202C39] hover:text-white hover:cursor-pointer hover:animate-bounce"
+              )} className="mb-5 md:mb-10 text-xl px-8 py-2 bg-[#B8B08D] rounded-full shadow-xl hover:bg-[#202C39] hover:text-white hover:cursor-pointer hover:animate-bounce"
               > Production Companies
               </button>
 

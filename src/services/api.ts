@@ -139,13 +139,13 @@ export async function getMoviesByGenre(genreId: number, page: number) {
 
 
 // Request to filter movies by genre, release_date, vote_average and to sort them by popularity, release_date or vote_average
-export async function getFilteredMovies(sortBy: string = "popularity.desc", genreId?: number, year?: number, voteAverage?: number) {
+export async function getFilteredMovies(sortBy: string = "popularity.desc", page: number, genreId?: number, year?: number, voteAverage?: number) {
   try {
     const httpResponse = await httpRequester.get<{ results: IMovie[] }>('/discover/movie', {
       params: {
         language: "en-US",
         sort_by: sortBy,
-        page: 1,
+        page: page,
         with_genres: genreId || undefined,
         primary_release_year: year || undefined,
         "vote_average.gte": voteAverage || undefined,

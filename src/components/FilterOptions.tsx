@@ -55,7 +55,7 @@ export function VoteAverageDropdown({ selectedVoteAverage, setSelectedVoteAverag
     { value: 10, label: '10' },
   ];
   return (
-    <div className='relative inline-block mr-10 hover:bg-[#C32126]'
+    <div className='relative inline-block hover:bg-[#C32126]'
     onMouseEnter={() => setIsOpen(true)}
     onMouseLeave={() => setIsOpen(false)}
     >

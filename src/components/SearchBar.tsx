@@ -10,7 +10,7 @@ export default function SearchBar() {
 
   const lastQuery = useRef("");
 
-  // 🏗️ Fonction de recherche avec debounce (500ms)
+
   const fetchMovies = useCallback(
     debounce(async (searchQuery: string) => {
       if (searchQuery === lastQuery.current) {
@@ -50,13 +50,13 @@ export default function SearchBar() {
   };
 
   return (
-    <div>
+    <div className="place-items-center">
       <input
         type="text"
         placeholder="Search..."
         value={state.query}
         onChange={handleSearchChange}
-        className="mr-80 rounded-xl shadow-xs border-solid max-h-10 min-w-80 bg-white py-1 hover:shadow-xl outline-none focus:ring-4 focus:ring-white"
+        className="mx-auto rounded-xl pl-5 shadow-xs border-solid max-h-10 lg:min-w-80 bg-white py-1 hover:shadow-xl outline-none focus:ring-4 focus:ring-white"
       />
 
       {state.loading && <span className="ml-2 text-blue-500 animate-spin">⏳</span>}

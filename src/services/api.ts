@@ -17,7 +17,7 @@ const httpRequester = axios.create({
 // Request pour obtenir les films populaires via ton API Express
 export async function getPopularMovies(page: number) {
   try {
-    const httpResponse = await httpRequester.get<{ results: IMovie[] }>(
+    const httpResponse = await httpRequester.get<IMovie[]>(
       '/popular', // Assure-toi que cette route existe sur ton API Express
       {
         params: { page },
@@ -35,7 +35,7 @@ export async function getPopularMovies(page: number) {
 // Request pour la recherche de films via ton API Express
 export async function getMoviesBySearch(query: string) {
   try {
-    const httpResponse = await httpRequester.get<{ results: IMovie[] }>(
+    const httpResponse = await httpRequester.get<IMovie[]>(
       '/search', // Assure-toi que cette route existe sur ton API Express
       {
         params: { query },
@@ -92,7 +92,7 @@ export async function getMovieCredits(id: number) {
 
 export async function getAllGenres() {
   try {
-    const httpResponse = await httpRequester.get<{ genres: IGenre[] }>('/genres');
+    const httpResponse = await httpRequester.get<IGenre[]>('/genres');
     console.log(httpResponse);
     return httpResponse.data;
   } catch (error) {
@@ -125,7 +125,7 @@ export async function getFilteredMovies(
   voteAverage?: number
 ) {
   try {
-    const httpResponse = await httpRequester.get<{ results: IMovie[] }>('/filter', {
+    const httpResponse = await httpRequester.get<IMovie[]>('/filter', {
       params: {
         sortBy,
         page,
@@ -144,7 +144,7 @@ export async function getFilteredMovies(
 // Years Request
 export async function getYears() {
   try {
-    const httpResponse = await httpRequester.get<{ years: number[] }>('/years');
+    const httpResponse = await httpRequester.get<number[]>('/years');
     return httpResponse.data;
   } catch (error) {
     console.error("Erreur lors de la récupération des années : ", error);

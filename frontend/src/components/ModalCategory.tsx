@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { getAllGenres } from '../services/api';
 import { IGenre, ModalCategoryProps } from '../@types';
 import rightArrow from '../assets/rightArrow.png';

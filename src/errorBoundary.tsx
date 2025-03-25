@@ -11,7 +11,7 @@ interface ErrorBoundaryState {
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   state = { hasError: false };
 
-  static getDerivedStateFromError(error: Error) {
+  static getDerivedStateFromError() {
     // Met à jour l'état pour afficher un fallback UI
     return { hasError: true };
   }

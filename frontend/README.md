@@ -1,4 +1,4 @@
-Projet Vite + React with Tailwind
+Projet Vite + React with Tailwind (Frontend)
 
 Application project with only front and Tmdb API.
 

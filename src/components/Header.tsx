@@ -15,52 +15,66 @@ export default function Header() {
 
   const categoryButtonAvailability = ["/", "/search"];
 
+  const getPxFromVh = (vh: number) => (window.innerHeight * vh) / 100;
+  const getPxFromVw = (vw: number) => (window.innerWidth * vw) / 100;
+
   useEffect(() => {
+
     const handleScroll = () => {
-      const scrollY = window.scrollY;
       setIsFixed(scrollY > 100); 
-      const handleResize = () => {
+    };
+
+    const handleResize = () => {
         setIsMobile(window.innerWidth < 768);
         setIsTablet(window.innerWidth < 1024);
         setIsLargeTablet(window.innerWidth < 1280);
       };
-      window.addEventListener("resize", handleResize);
-      return () => window.removeEventListener("resize", handleResize);
-    };
 
+    window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    return () =>{ 
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+    }
   }, []);
+
+  useEffect(() => {
+    if (!categoryButtonAvailability.includes(location.pathname)) {
+      setIsModalOpen(false);
+    }
+  }, [location.pathname]);
+  
 
   const buttonVariants = isMobile
     ? {
-        top: isFixed ? "90vh" : "10vh",
+        top: isFixed ? getPxFromVh(90) : getPxFromVh(15),
         bottom: "auto",
-        right: isFixed ? "20vh" : "auto",
-        left: isFixed ? "auto" : "0vh",
+        right: isFixed ? getPxFromVw(40) : getPxFromVw(80),
+        left: isFixed ? getPxFromVw(40) : getPxFromVw(0),
         x: 0,
       }
     : isTablet
     ? {
-        top: isFixed ? "85vh" : "10vh",
-        right:isFixed ? "33vh" : "65vh",
-        bottom: isFixed ? "auto" : "0vh",
-        left: "auto",
+        top: isFixed ? getPxFromVh(85) : getPxFromVh(10),
+        right:isFixed ? getPxFromVw(50) : getPxFromVw(80),
+        bottom: "auto",
+        left: isFixed ? getPxFromVw(45) : getPxFromVw(0),
         x: 0,
       }
     : isLargeTablet
     ? {
-        top: isFixed ? "90vh" : "5vh",
-        right: isFixed ? "33vh" : "67vh",
-        bottom: isFixed ? "auto" : "0vh",
-        left: "auto",
+        top: isFixed ? getPxFromVh(90) : getPxFromVh(5),
+        right: isFixed ? getPxFromVw(50) : getPxFromVw(80),
+        bottom: "auto",
+        left: isFixed ? getPxFromVw(45) : getPxFromVw(0),
         x: 0,
     }  
     : {
-        top: isFixed ? "80vh" : "auto",
+        top: isFixed ? getPxFromVh(80) : getPxFromVh(5),
         right: "auto",
-        bottom: isFixed ? "auto" : "80vh",
-        left: "200vh",
+        bottom: isFixed ? getPxFromVh(5) : getPxFromVh(80),
+        left: getPxFromVw(95),
         x: 0,
       };
 

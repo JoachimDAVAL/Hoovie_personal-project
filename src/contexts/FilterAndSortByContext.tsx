@@ -45,6 +45,7 @@ export function MovieFilterProvider({ children }: { children: ReactNode }) {
 
       const newPage = reset ? 1: page;
       const data = await getFilteredMovies(selectedSort, newPage, selectedGenre, selectedYear, selectedVoteAverage);
+      console.log(data);
 
       if (data.length === 0) {
         setHasMore(false);

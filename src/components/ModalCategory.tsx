@@ -8,7 +8,9 @@ import {YearsDropdown, VoteAverageDropdown, SortByDropdown} from './FilterOption
 import { AnimatePresence, motion } from 'motion/react';
 import SearchBar from './SearchBar';
 
+
 export default function ModalCategory({ isOpen }: ModalCategoryProps) {
+  console.log("Rendering ModalCategory");
   const [genres, setGenres] = useState<IGenre[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
   const { selectedGenre, selectedYear, selectedVoteAverage, selectedSort, setSelectedGenre, setSelectedYear, setSelectedVoteAverage, setSelectedSort } = useMovieFilter();
@@ -39,11 +41,14 @@ export default function ModalCategory({ isOpen }: ModalCategoryProps) {
 
     const fetchGenres = async () => {
       const genres = await getAllGenres();
+      console.log(genres);
       setGenres(genres);
     };
 
     fetchGenres();
   }, []);
+
+
 
 
   return (

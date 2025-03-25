@@ -7,6 +7,7 @@ import MovieDetailModal from "../components/MovieDetailModal";
 
 export function MovieDetail() {
   const { id } = useParams<{ id: string }>();
+  console.log("ID récupéré :", id); // Devrait afficher un ID
   const [movie, setMovie] = useState<IMovie | null>(null);
   const [providers, setProviders] = useState<IWatchProviders>({});
   const [actors, setActors] = useState<IActors[]>([]);
@@ -18,6 +19,7 @@ export function MovieDetail() {
     setHoveredContent(content);
     setShowModal(true);
   };
+
 
   useEffect(() => {
     const fetchMovie = async () => {

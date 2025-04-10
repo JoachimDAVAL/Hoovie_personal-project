@@ -1,7 +1,6 @@
 import axios from "axios";
 import { IMovie, IGenre } from "../@types";
 
-// L'URL de ton serveur Express (en développement, tu utilises souvent localhost:5000 ou un port spécifique)
 const API_URL = "http://localhost:3000/api"; 
 
 const httpRequester = axios.create({
@@ -14,11 +13,11 @@ const httpRequester = axios.create({
 
 // PopularMoviesList Page
 
-// Request pour obtenir les films populaires via ton API Express
+
 export async function getPopularMovies(page: number) {
   try {
     const httpResponse = await httpRequester.get<IMovie[]>(
-      '/popular', // Assure-toi que cette route existe sur ton API Express
+      '/popular', 
       {
         params: { page },
       }
@@ -32,11 +31,11 @@ export async function getPopularMovies(page: number) {
 
 // SearchPage
 
-// Request pour la recherche de films via ton API Express
+
 export async function getMoviesBySearch(query: string) {
   try {
     const httpResponse = await httpRequester.get<IMovie[]>(
-      '/search', // Assure-toi que cette route existe sur ton API Express
+      '/search', 
       {
         params: { query },
       }
@@ -50,11 +49,10 @@ export async function getMoviesBySearch(query: string) {
 
 // MovieDetail Page
 
-// Request pour obtenir un film par son ID via ton API Express
 
 export async function getMovieById(id: number) {
   try {
-    const httpResponse = await httpRequester.get<IMovie>(`/${id}`); // Cette route doit correspondre à ton endpoint Express
+    const httpResponse = await httpRequester.get<IMovie>(`/${id}`); 
     return httpResponse.data;
   } catch (error) {
     console.error(`Erreur lors de la récupération du film ${id} : `, error);
@@ -62,9 +60,6 @@ export async function getMovieById(id: number) {
   }
 }
 
-
-
-// Providers et Crédits (identique à ton exemple)
 
 export async function getProvidersByMovieId(id: number) {
   try {
@@ -88,7 +83,6 @@ export async function getMovieCredits(id: number) {
 
 // MoviesByGenre Page
 
-// Request pour obtenir les genres via ton API Express
 
 export async function getAllGenres() {
   try {
@@ -102,8 +96,6 @@ export async function getAllGenres() {
 }
 
 
-
-// MoviesByGenre Page : Request pour obtenir les films par genre
 export async function getMoviesByGenre(genreId: number, page: number) {
   try {
     const httpResponse = await httpRequester.get(`/genre/${genreId}`, {

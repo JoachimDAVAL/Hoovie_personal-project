@@ -66,7 +66,7 @@ export function MovieDetail() {
 
   const renderProviders = () => {
     const countryProviders = providers['FR']; 
-    if (!countryProviders) return <p className="col-span-2 mt-5 md:mt-0">Aucun fournisseur disponible</p>;
+    if (!countryProviders) return <p className="col-span-2 mt-5 md:mt-0">No providers</p>;
 
     return (
         <div className="col-span-2 my-10 md:my-0 grid grid-cols-2 gap-4 place-items-center">

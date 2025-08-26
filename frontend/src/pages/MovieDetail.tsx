@@ -75,17 +75,17 @@ export function MovieDetail() {
         :
         <div className="col-start-1 flex flex-wrap gap-4 ">
           <button onMouseEnter={() => handleMouseEnter(
-            <div className="flex flex-wrap place-items-end">
+            <div className="place-items-center">
               {countryProviders.rent?.map(provider => (
               <div key={provider.provider_id} className="md:mr-10 md:mt-5 place-items-center">
                 {provider.logo_path && (
                   <img
                     src={`https://image.tmdb.org/t/p/w45${provider.logo_path}`}
                     alt={provider.provider_name}
-                    className="h-8 mr-2 rounded-lg"
+                    className="h-20 mr-2 rounded-lg"
                   />
                 )}
-                <p>{provider.provider_name}</p>
+                <p className="text-center w-64 h-40 rounded-lg py-30">{provider.provider_name}</p>
               </div>
               
           ))}
@@ -99,7 +99,7 @@ export function MovieDetail() {
         :
           <div className="flex flex-wrap gap-4 col-start-2">
           <button onMouseEnter={() => handleMouseEnter(
-            <div className="flex flex-wrap place-items-end ">
+            <div className="place-items-center">
               {countryProviders.flatrate?.map(provider => (
                 <div key={provider.provider_id} className=" md:mr-10 md:mt-5 place-items-center">
                   {provider.logo_path && (
@@ -109,7 +109,7 @@ export function MovieDetail() {
                       className="h-8 mr-2 rounded-lg "
                     />
                   )}
-                  <p>{provider.provider_name}</p>
+                  <p className="text-center w-64 h-40 rounded-lg py-30">{provider.provider_name}</p>
                 </div>
               ))}
             </div>
@@ -187,9 +187,9 @@ export function MovieDetail() {
             <div className="flex flex-col items-center">
 
               <button onMouseEnter={() => handleMouseEnter(
-                <div className="flex flex-wrap items-end">
+                <div className=" place-items-center">
                   {actors?.map(actor => 
-                  <p key={actor.cast_id} className="m-1">
+                  <p key={actor.cast_id} className="text-center w-64 h-40 rounded-lg py-30 ">
                     {actor.name}, 
                   </p>)}
                 </div>
@@ -199,9 +199,9 @@ export function MovieDetail() {
               </button>
 
               <button onMouseEnter={() => handleMouseEnter(
-                  <div className="flex flex-wrap place-items-end">
+                  <div className="place-items-center">
                     {movie.production_companies?.map(company => 
-                    (<p key={company.id} className="mr-10 mt-5 place-items-center">
+                    (<p key={company.id} className="text-center w-64 h-40 rounded-lg py-30">
                       <img src={company.logo_path ? `https://image.tmdb.org/t/p/w45${company.logo_path}` : "/placeholder.jpg"} alt={company.name} />
                       {company.name}
                     </p>))}

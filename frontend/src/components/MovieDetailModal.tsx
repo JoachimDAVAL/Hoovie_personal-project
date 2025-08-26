@@ -15,17 +15,17 @@ export default function MovieDetailModal({ isOpen, content }: ModalProps) {
   };
 
   return (
-    <div className="absolute inset-0 flex justify-end m-y-30 place-items-end ">
+    <div className="absolute inset-0 flex justify-end items-end">
       <AnimatePresence>
         {isOpen && (
-          <motion.div className=" w-50 p-8 rounded-lg md:w-2/4 h-2/2 md:h-1/4 overflow-auto place-items-end"
+          <motion.div className=" p-8 rounded-lg md:w-2/4 h-full overflow-x-auto scroll-smooth"
             initial="hidden"
             animate="visible"
             exit="hidden"
             variants={modalVariants}
             transition={{ duration: 0.5 }}
           >
-              <div className=" flex text-lg text-white font-semibold place-items-center ">{content}</div>
+              <div className="inline m-10 text-5xl text-white font-semibold place-items-center ">{content}</div>
           </motion.div>
         )}
       </AnimatePresence>

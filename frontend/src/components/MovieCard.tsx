@@ -11,8 +11,8 @@ export default function MovieCard({ movie }: MovieCardProps) {
   const constraintsRef = useRef<HTMLDivElement>(null);
 
   const truncateText = (text: string, maxLength: number) => {
-    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
-  };
+  return text.length > maxLength ? text.slice(0, maxLength) + "…" : text;
+};
 
   const handleMouseEnter = () => {
     setShowDetails(true);
@@ -35,7 +35,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
       dragConstraints={constraintsRef}
       dragElastic={0.1}
     >
-      
+     
         <img
           src={
             movie.poster_path
@@ -46,7 +46,11 @@ export default function MovieCard({ movie }: MovieCardProps) {
           className="w-[100] h-[200] md:w-[200] md:h[300]  lg:w-[350px] lg:h-[400px] 2xl:w-[350px] 2xl:h-[500px] object-cover rounded-xl" 
           loading="lazy"
         />
-        <h2 className="movie-title text-center font-extrabold text-2xl">{movie.title}</h2>
+
+          <h2 className="movie-title text-center font-extrabold text-2xl p-5">{truncateText(movie.title, 25)}</h2>
+ 
+
+        
       
 
       {showDetails && (
@@ -64,7 +68,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
             <div className="absolute inset-0 bg-white/60 text-black">
               <div className="flex flex-wrap text-black m-10 justify-center content-around">
               <h3 className="font-bold text-4xl mb-10">{movie.title}</h3>
-              <p className="text-xl mb-20">{truncateText(movie.overview, 200)}</p>
+              <p className="text-xl mb-20 line-clamp-3 sm:line-clamp-4 md:line-clamp-6">{movie.overview}</p>
               <p className="flex text-4xl justify-center items-center font-bold mb-10">
                 {movie.vote_average}
                 <BsFillStarFill className="ml-2" />

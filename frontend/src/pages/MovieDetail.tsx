@@ -106,7 +106,7 @@ export function MovieDetail() {
                     <img
                       src={`https://image.tmdb.org/t/p/w45${provider.logo_path}`}
                       alt={provider.provider_name}
-                      className="h-8 mr-2 rounded-lg "
+                      className="h-20 mr-2 rounded-lg "
                     />
                   )}
                   <p className="text-center w-64 h-40 rounded-lg py-30">{provider.provider_name}</p>
@@ -135,7 +135,7 @@ export function MovieDetail() {
           }}
         >
           <div className="absolute inset-0 bg-black/50 text-white">
-            <div className="container ml-5 md:mx-auto  h-full flex items-start justify-end flex-col pb-8">
+            <div className="container md:mx-auto  h-full flex items-start justify-end flex-col pb-8">
               <div className="w-[50vw]">
                 <h1 className="text-4xl font-bold mt-10">{movie.title}</h1>
                 {movie.tagline && (
@@ -201,8 +201,12 @@ export function MovieDetail() {
               <button onMouseEnter={() => handleMouseEnter(
                   <div className="place-items-center">
                     {movie.production_companies?.map(company => 
-                    (<p key={company.id} className="text-center w-64 h-40 rounded-lg py-30">
-                      <img src={company.logo_path ? `https://image.tmdb.org/t/p/w45${company.logo_path}` : "/placeholder.jpg"} alt={company.name} />
+                    (<p key={company.id} className="text-center place-items-center w-64 h-40 rounded-lg py-30">
+                      <img 
+                      src={company.logo_path ? `https://image.tmdb.org/t/p/w45${company.logo_path}` : "/placeholder.jpg"} 
+                      alt={company.name}
+                      className="h-20 mr-2 rounded-lg"
+                       />
                       {company.name}
                     </p>))}
                   </div>

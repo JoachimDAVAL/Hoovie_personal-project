@@ -12,7 +12,7 @@ It allows users to search for movies, browse categories, and filter results with
 - **Frontend:** React (with Vite) · TypeScript  
 - **Backend:** Express.js (JavaScript)  
 - **API:** The Movie Database (TMDb)  
-- **Deployment:** Vercel (Frontend)  
+- **Deployment:** Vercel 
 
 ---
 

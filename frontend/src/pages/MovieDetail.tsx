@@ -126,7 +126,6 @@ export function MovieDetail() {
 
   return (
     <div className=" place-items-center">
-      
       <div className=" py-10 items-center min-h-screen bg-gray-100">
         <div
           className="h-[30vh] lg:h-[40vh] 2xl:h-[50vh] w-full bg-cover bg-center bg-fixed relative"
@@ -135,14 +134,14 @@ export function MovieDetail() {
           }}
         >
           <div className="absolute inset-0 bg-black/50 text-white">
-            <div className="container md:mx-auto  h-full flex items-start justify-end flex-col pb-8">
+            <div className="container md:mx-auto h-full place-items-center place-content-center md:flex items-start justify-end flex-col pb-8">
               <div className="w-[50vw]">
                 <h1 className="text-4xl font-bold mt-10">{movie.title}</h1>
                 {movie.tagline && (
                 <p className="text-xl text-gray-300 italic mb-4">{movie.tagline}</p>
                   )}
               </div>
-              < MovieDetailModal isOpen={showModal} content={hoveredContent} className="hidden lg:block"/>
+              < MovieDetailModal isOpen={showModal} content={hoveredContent} onClose={() => setShowModal(false)} className="hidden lg:block"/>
             </div>
   
           </div>

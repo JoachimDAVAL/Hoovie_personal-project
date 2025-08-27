@@ -1,12 +1,15 @@
 import { MovieCardProps } from "../@types";
 import { Link } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { BsFillStarFill } from "react-icons/bs";
 import { motion } from "motion/react";
 import defaultImage from "../assets/defaultImage.jpg";
 
 export default function MovieCard({ movie }: MovieCardProps) {
   const [showDetails, setShowDetails] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+
+  const MIN_WIDTH = 500;
 
   const constraintsRef = useRef<HTMLDivElement>(null);
 
@@ -22,6 +25,17 @@ export default function MovieCard({ movie }: MovieCardProps) {
     setShowDetails(false);
   };
 
+   useEffect(() => {
+    const handleResize = () => {
+      setIsActive(window.innerWidth >= MIN_WIDTH);
+    };
+
+    handleResize(); 
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <motion.div
       className="relative place-items-center"
@@ -31,11 +45,11 @@ export default function MovieCard({ movie }: MovieCardProps) {
       
     >
       <motion.div 
-      drag
+      drag={isActive ? true : false}
       dragConstraints={constraintsRef}
       dragElastic={0.1}
     >
-     
+      
         <img
           src={
             movie.poster_path
@@ -43,14 +57,10 @@ export default function MovieCard({ movie }: MovieCardProps) {
               : defaultImage
           }
           alt={movie.title}
-          className="w-[100] h-[200] md:w-[200] md:h[300]  lg:w-[350px] lg:h-[400px] 2xl:w-[350px] 2xl:h-[500px] object-cover rounded-xl" 
+          className="w-[300] h-[400] md:w-[200] md:h[300]  lg:w-[350px] lg:h-[400px] 2xl:w-[350px] 2xl:h-[500px] object-cover rounded-xl" 
           loading="lazy"
         />
-
-          <h2 className="movie-title text-center font-extrabold text-2xl p-5">{truncateText(movie.title, 25)}</h2>
- 
-
-        
+        <h2 className="movie-title text-center font-extrabold text-2xl p-5 overflow-auto whitespace-nowrap">{truncateText(movie.title, 25)}</h2>
       
 
       {showDetails && (

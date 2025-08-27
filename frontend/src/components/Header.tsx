@@ -1,9 +1,12 @@
+/// <reference lib="dom" />
 import logo from '../assets/Logo components.svg';
 import categoryIcon from '../assets/category.png';
 import { Link, useLocation } from 'react-router-dom';
 import ModalCategory from './ModalCategory';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+
+
 
 export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);

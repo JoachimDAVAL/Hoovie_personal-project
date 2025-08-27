@@ -1,5 +1,8 @@
 import { createContext, useContext, useReducer, ReactNode } from "react";
 import { IMovie } from "../@types";
+import * as React from "react";
+
+
 
 interface SearchState {
   query: string;

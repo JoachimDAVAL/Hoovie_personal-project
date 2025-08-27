@@ -3,6 +3,8 @@ import { IMovie } from "../@types";
 import MovieCard from "../components/MovieCard";
 import {getPopularMovies} from "../services/api";
 
+
+
 export default function MoviesList() {
   const [movies, setMovies] = useState<IMovie[]>([]);
   const [page, setPage] = useState(1);

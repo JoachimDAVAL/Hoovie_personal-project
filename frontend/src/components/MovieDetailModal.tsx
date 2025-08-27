@@ -47,18 +47,22 @@ export default function MovieDetailModal({ isOpen, content, onClose }: ModalProp
           </motion.div>
         ) : (
           <motion.div
-          className="fixed md:mb-80 inset-0 max-w-[80vh] max-h-[30vh] bg-black/80 items-center p-8 overflow-auto place-self-center rounded-2xl"
-          initial="hidden"
-          animate="visible"
-          exit="hidden"
-          variants={modalVariants}
-          transition={{ duration: 0.5 }}
-          onClick={() => onClose()}
-        >
-          <div className="text-4xl text-white">
-          {content}
-          </div>
-        </motion.div>
+  className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+  initial="hidden"
+  animate="visible"
+  exit="hidden"
+  variants={modalVariants}
+  transition={{ duration: 0.5 }}
+  onClick={onClose}
+>
+  <div
+    className="bg-zinc-900 rounded-2xl w-[90vw] max-w-[480px] max-h-[30vh] overflow-auto p-6 relative"
+    onClick={(e) => e.stopPropagation()}
+  >
+    <div className="text-4xl text-white">{content}</div>
+  </div>
+</motion.div>
+
         ))}
       </AnimatePresence>
     </div>

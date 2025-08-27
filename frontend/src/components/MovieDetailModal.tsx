@@ -47,7 +47,7 @@ export default function MovieDetailModal({ isOpen, content, onClose }: ModalProp
           </motion.div>
         ) : (
           <motion.div
-          className="fixed mb-80 inset-0 max-w-[80vh] max-h-[30vh] bg-black/80 items-center p-8 overflow-auto place-self-center rounded-2xl"
+          className="fixed md:mb-80 inset-0 max-w-[80vh] max-h-[30vh] bg-black/80 items-center p-8 overflow-auto place-self-center rounded-2xl"
           initial="hidden"
           animate="visible"
           exit="hidden"
